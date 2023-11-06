@@ -1,0 +1,77 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+:root {
+    --font-primary: 'Montserrat';
+    --font-main: "Inter var", sans-serif;
+    --font-secondary: 'Poppins';
+    --font-monospace: 'Source Code Pro', 'Courier New', Courier, monospace;
+    --gradient-brand: linear-gradient(15deg, #8b2386, #f27021);
+    --timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+    --transition-xslow: 1200ms var(--timing-function);
+    --transition-slow: 800ms var(--timing-function);
+    --transition-tnormal: 450ms var(--timing-function);
+    --transition-fast: 300ms var(--timing-function);
+    --transition-xfast: 200ms var(--timing-function);
+    --filter-for-hover-inversed: brightness(95%);
+    --filter-for-active-inversed: brightness(90%);
+    --g0: 0px;
+    --g0h: 4px;
+    --g1: 8px;
+    --g1h: 12px;
+    --g2: 16px;
+    --g2h: 20px;
+    --g3: 24px;
+    --g4: 32px;
+    --g5: 40px;
+    --color-brand: #f43533;
+    --day-color-right-chat: #d4ecfc;
+    --day-color-text-primary: #292929;
+    --day-color-text-secondary: #606060;
+    --day-color-text-white: #fff;
+    --day-color-action: #1ba2f9;
+    --day-color-subaction: #56616a;
+    --day-color-disabled: #86919a;
+    --day-color-sublime: #a5aab1;
+    --day-color-dim: #cccccf;
+    --day-color-bg-popup: #fefefe;
+    --day-color-bg-element: #d8d8d8;
+    --day-color-bg-group: #ececec;
+    --day-color-bg-base: #f9f9f9;
+    --day-color-positive: #27a442;
+    --day-color-attention: #f7b510;
+    --day-color-negative: #e08020;
+    --day-color-error: #dc3545;
+    --day-shadow-low: 0 1px 2px rgba(0,0,0,0.15);
+    --day-shadow-medium: 0 2px 4px rgba(0,0,0,0.15);
+    --day-shadow-high: 0 4px 8px rgba(0,0,0,0.15);
+    --day-filter-for-hover: brightness(90%);
+    --day-filter-for-active: brightness(85%);
+    --night-color-right-chat: #324757;
+    --night-color-text-primary: #fff;
+    --night-color-text-secondary: #b4b4b4;
+    --night-color-text-white: #fff;
+    --night-color-action: #1ba2f9;
+    --night-color-subaction: #afb5bc;
+    --night-color-disabled: #717a80;
+    --night-color-sublime: #414a50;
+    --night-color-dim: #2c3134;
+    --night-color-bg-popup: #2b3138;
+    --night-color-bg-element: #2b3338;
+    --night-color-bg-group: #171f24;
+    --night-color-bg-base: #212629;
+    --night-color-positive: #74be86;
+    --night-color-attention: #facd10;
+    --night-color-negative: #f49434;
+    --night-color-error: #dc3545;
+    --night-shadow-low: 0 1px 2px rgba(0,0,0,0.6);
+    --night-shadow-medium: 0 2px 4px rgba(0,0,0,0.5);
+    --night-shadow-high: 0 3px 6px rgba(0,0,0,0.3);
+    --night-filter-for-hover: brightness(120%);
+    --night-filter-for-active: brightness(90%);
+}
+body{
+    font-family: var(--font-main);
+}

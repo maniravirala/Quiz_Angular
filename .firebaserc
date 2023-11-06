@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "quiz-angular-int219": {
+      "hosting": {
+        "QuizAngular": [
+          "quiz-angular-int219"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "quiz-angular-int219"
+  }
+}
