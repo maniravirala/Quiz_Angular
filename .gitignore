@@ -45,3 +45,11 @@ Thumbs.db
 .firebase
 *-debug.log
 .runtimeconfig.json
+
+# env
+.env
+.env*
+
+# Angular Environment Configuration Files
+/src/environments/environment.ts
+/src/environments/environment.prod.ts

@@ -16,15 +16,18 @@ import { QuizComponent } from './quiz/quiz.component';
 import { ResultComponent } from './result/result.component';
 import { SharedModule } from 'primeng/api';
 import { SharedService } from './shared.service';
+// require('dotenv').config();
+import { environment } from '../environments/environment';
+
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBJ78lDpmfbbQkXR3HO3C_e6oDkEK_ummI",
-  authDomain: "quiz-angular-int219.firebaseapp.com",
-  projectId: "quiz-angular-int219",
-  storageBucket: "quiz-angular-int219.appspot.com",
-  messagingSenderId: "204402302013",
-  appId: "1:204402302013:web:2de432dbdb67e6c44c9e54",
-  measurementId: "G-62XVK0K8NL"
+  apiKey: environment.FIREBASE_API_KEY,
+  authDomain: environment.FIREBASE_AUTH_DOMAIN,
+  projectId: environment.PROJECT_ID,
+  storageBucket: environment.STORAGE_BUCKET,
+  messagingSenderId: environment.MESSAGING_SENDER_ID,
+  appId: environment.APP_ID,
+  measurementId: environment.MEASURE_ID,
 };
 
 @NgModule({
