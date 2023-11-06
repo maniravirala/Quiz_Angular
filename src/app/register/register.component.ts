@@ -17,6 +17,8 @@ export class RegisterComponent {
   errorRequiredPass: boolean = false;
   errorRequiredCnfrmPass: boolean = false;
   errorRequiredTandC: boolean = false;
+  errorRequiredEmail: boolean = false;
+  inputValue: string = '';
 
   registrationForm: FormGroup;
 
@@ -24,6 +26,7 @@ export class RegisterComponent {
     this.registrationForm = this.fb.group({
       name: ['', Validators.required],
       regNo: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       cnfrmpassword: ['', Validators.required],
       tandc: [false, Validators.requiredTrue],
@@ -42,8 +45,8 @@ export class RegisterComponent {
     this.refreshUsers();
   }
 
-  addUsers(name:string, password:string, regNo:number, tandc:boolean) {
-    this.service.addUser(name, password, regNo, tandc).then((res) => {
+  addUsers(name:string, password:string, email:string, regNo:number, tandc:boolean) {
+    this.service.addUser(name, password, email, regNo, tandc).then((res) => {
       console.log(res);
       this.refreshUsers();
     });
@@ -69,6 +72,12 @@ export class RegisterComponent {
       this.errorRequiredRegNo = false;
     }
 
+    if (this.registrationForm.value.email.trim() == '') {
+      this.errorRequiredEmail = true;
+    }else if (this.registrationForm.value.email.trim() != '') {
+      this.errorRequiredEmail = false;
+    }
+    
     if (this.registrationForm.value.password.trim() == '') {
       this.errorRequiredPass = true;
     } else if (this.registrationForm.value.password.trim() != '') {
@@ -98,14 +107,16 @@ export class RegisterComponent {
       !this.errorRequiredName &&
       !this.errorRequiredRegNo &&
       !this.errorRequiredPass &&
+      !this.errorRequiredEmail &&
       !this.errorRequiredCnfrmPass &&
       !this.errorRequiredTandC
     ) {
       let name = this.registrationForm.value.name.trim();
       let password = this.registrationForm.value.password.trim();
+      let email = this.registrationForm.value.email.trim();
       let regNo = this.registrationForm.value.regNo.trim();
       let tandc = this.registrationForm.value.tandc;
-      this.addUsers(name=name, password=password, regNo=regNo, tandc=tandc);
+      this.addUsers(name=name, password=password,email=email, regNo=regNo, tandc=tandc);
     }
   }
 

@@ -51,6 +51,26 @@
                     </div>
                   </div>
                   <div class="inputRow d-flex flex-row align-items-center">
+                    <span class="material-symbols-outlined me-2">email</span>
+                    <div class="form flex-fill position-relative">
+                      <label class="position-relative w-100">
+                        <input
+                          type="email"
+                          id="email"
+                          class="form-control"
+                          placeholder=""
+                          required
+                          name="email"
+                          formControlName="email"
+                          [class.is-invalid]="errorRequiredEmail"
+                          [(ngModel)]="inputValue"
+                          [class.hasValue]="inputValue"
+                        />
+                        <span class="top-50 position-absolute">Email</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="inputRow d-flex flex-row align-items-center">
                     <span class="material-symbols-outlined me-2">lock</span>
                     <div class="form flex-fill position-relative">
                       <label class="position-relative w-100">
@@ -111,9 +131,13 @@
                       Register
                     </button>
                   </div>
+
+                  <div class="d-flex justify-content-center mx-4">
+                    <span>Already Registered? <a routerLink="/login">Login</a></span>
+                  </div>
                 </form>
               </div>
-              <div class="col p-5 ">
+              <div class="col p-5">
                 <!-- <img src="/src/assets/illustrators/programing.svg" alt="login_illustrator"> -->
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
                   <g id="freepik--background-simple--inject-5">

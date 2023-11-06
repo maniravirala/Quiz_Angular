@@ -18,18 +18,13 @@ import { SharedModule } from 'primeng/api';
 import { SharedService } from './shared.service';
 // require('dotenv').config();
 import { environment } from '../environments/environment';
+import { LoginComponent } from './login/login.component';
 
-
-const firebaseConfig = {
-  apiKey: environment.FIREBASE_API_KEY,
-  authDomain: environment.FIREBASE_AUTH_DOMAIN,
-  projectId: environment.PROJECT_ID,
-  storageBucket: environment.STORAGE_BUCKET,
-  messagingSenderId: environment.MESSAGING_SENDER_ID,
-  appId: environment.APP_ID,
-  measurementId: environment.MEASURE_ID,
-};
-
+// import { AngularFireModule } from '@angular/fire';
+// import { AngularFireAuthModule } from '@angular/fire/auth';
+// import { AngularFirestoreModule } from '@angular/fire/firestore'; 
+// import { AngularFireStorageModule } from '@angular/fire/storage';
+// import { AngularFireDatabaseModule } from '@angular/fire/database'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +32,7 @@ const firebaseConfig = {
     NavbarComponent,
     QuizComponent,
     ResultComponent,
+    LoginComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -46,8 +42,14 @@ const firebaseConfig = {
     FormsModule,
     PasswordModule,
     ReactiveFormsModule,
-    provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
+
+    // AngularFireModule(() => initializeApp(firebaseConfig)),
+    // AngularFireAuthModule,
+    // AngularFirestoreModule,
+    // AngularFireStorageModule,
+    // AngularFireDatabaseModule
   ],
   providers: [SharedService],
   bootstrap: [AppComponent],

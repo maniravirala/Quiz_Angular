@@ -45,6 +45,11 @@ input{
     font-size: 0.7em;
 }
 
+.hasValue+span{
+    transform: translate(0%, -140%);
+    font-size: 0.7em !important;
+}
+
 input{
     height: 50px;
     padding-bottom: 0;
