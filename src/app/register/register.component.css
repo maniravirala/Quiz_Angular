@@ -46,20 +46,12 @@ input {
     font-size: 0.7em;
 }
 
-<<<<<<< HEAD
 .hasValue+span {
-=======
-.hasValue+span{
->>>>>>> 8f8e30b1723a3749fd54a28ede9bb0d22ed0d741
     transform: translate(0%, -140%);
     font-size: 0.7em !important;
 }
 
-<<<<<<< HEAD
 input {
-=======
-input{
->>>>>>> 8f8e30b1723a3749fd54a28ede9bb0d22ed0d741
     height: 50px;
     padding-bottom: 0;
 }
