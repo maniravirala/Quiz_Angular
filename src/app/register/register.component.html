@@ -1,5 +1,5 @@
 <section class="user-select-none">
-  <div class="container vh-100">
+  <div class="container ">   <!--vh-100-->
     <div class="row h-100 align-items-center">
       <div class="col col-lg-12 col-xl-12">
         <div class="card text-black rounded-2 border-0">
@@ -25,7 +25,6 @@
                             required
                             name="Name"
                             formControlName="name"
-                            [class.is-invalid]="errorRequiredName"
                           />
                           <span class="top-50 position-absolute">Name</span>
                         </label>
@@ -55,7 +54,6 @@
                             required
                             name="RegNo"
                             formControlName="regNo"
-                            [class.is-invalid]="errorRequiredRegNo"
                           />
                           <span class="top-50 position-absolute"
                             >Registration Number</span
@@ -88,7 +86,6 @@
                             required
                             name="email"
                             formControlName="email"
-                            [class.is-invalid]="errorRequiredEmail"
                             [class.hasValue]="email.value"
                           />
                           <span class="top-50 position-absolute">Email</span>
@@ -119,7 +116,6 @@
                             placeholder=""
                             required
                             formControlName="password"
-                            [class.is-invalid]="errorRequiredPass"
                           />
                           <span class="top-50 position-absolute">Password</span>
                         </label>

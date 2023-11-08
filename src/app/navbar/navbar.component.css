@@ -1,0 +1,7 @@
+.dropdown-toggle::after {
+    content: none;
+}
+
+.dropdown-menu li{
+    cursor: pointer;
+}

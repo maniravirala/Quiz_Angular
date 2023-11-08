@@ -8,6 +8,7 @@ import { NgForm } from '@angular/forms';
 import { SharedService } from '../shared.service';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-register',
@@ -16,11 +17,6 @@ import { HotToastService } from '@ngneat/hot-toast';
 })
 export class RegisterComponent {
   showPassword: boolean = false;
-  errorRequiredName: boolean = false;
-  errorRequiredRegNo: boolean = false;
-  errorRequiredPass: boolean = false;
-  errorRequiredTandC: boolean = false;
-  errorRequiredEmail: boolean = false;
   inputValue: string = '';
 
   registrationForm: FormGroup;
@@ -28,6 +24,7 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private service: SharedService,
+    private authService: AuthenticationService,
     private router: Router,
     private toast: HotToastService
   ) {
@@ -44,7 +41,7 @@ export class RegisterComponent {
   refreshUsers() {
     this.service.getUser().subscribe((data) => {
       this.users = data;
-      console.log(this.users);
+      // console.log(this.users);
     });
   }
 
@@ -89,55 +86,12 @@ export class RegisterComponent {
   }
 
   onSubmit() {
-    if (this.registrationForm.value.name.trim() == '') {
-      this.errorRequiredName = true;
-    } else if (this.registrationForm.value.name.trim() != '') {
-      this.errorRequiredName = false;
-    }
-
-    if (this.registrationForm.value.regNo.trim() == '') {
-      this.errorRequiredRegNo = true;
-    } else if (this.registrationForm.value.regNo.trim() != '') {
-      this.errorRequiredRegNo = false;
-    }
-
-    if (this.registrationForm.value.email.trim() == '') {
-      this.errorRequiredEmail = true;
-    } else if (this.registrationForm.value.email.trim() != '') {
-      this.errorRequiredEmail = false;
-    }
-
-    if (this.registrationForm.value.password.trim() == '') {
-      this.errorRequiredPass = true;
-    } else if (this.registrationForm.value.password.trim() != '') {
-      this.errorRequiredPass = false;
-    }
-
-    if (this.registrationForm.value.tandc == false) {
-      this.errorRequiredTandC = true;
-    } else if (this.registrationForm.value.tandc == true) {
-      this.errorRequiredTandC = false;
-    }
-
-    if (
-      !this.errorRequiredName &&
-      !this.errorRequiredRegNo &&
-      !this.errorRequiredPass &&
-      !this.errorRequiredEmail &&
-      !this.errorRequiredTandC
-    ) {
-      // let name = this.registrationForm.value.name.trim();
-      // let password = this.registrationForm.value.password.trim();
-      // let email = this.registrationForm.value.email.trim();
-      // let regNo = this.registrationForm.value.regNo.trim();
-      // let tandc = this.registrationForm.value.tandc;
-      // this.addUsers(name=name, password=password,email=email, regNo=regNo, tandc=tandc);
-    }
-
     if (this.registrationForm.valid) {
       const { name, password, email, regNo, tandc } =
         this.registrationForm.value;
-      
+      this.authService.signup(name,email, password).subscribe(() => {
+        this.router.navigate(['/dashboard']);
+      });
 
       // this.addUsers(name, password, email, regNo, tandc);
     } else {
