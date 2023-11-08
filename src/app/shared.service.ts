@@ -19,8 +19,8 @@ export class SharedService {
     return collectionData(users, { idField: 'id' });
   }
 
-  addUser(name: string, password: string, regNo: number, tandc: boolean) {
-    let data = { name: name, password: password, regNo: regNo, tandc: tandc };
+  addUser(name: string, password: string, email:string, regNo: number, tandc: boolean) {
+    let data = { name: name, password: password, email:email, regNo: regNo, tandc: tandc };
     let users = collection(this.fs, 'users');
     return addDoc(users, data);
   }

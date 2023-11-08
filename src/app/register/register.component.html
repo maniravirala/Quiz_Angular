@@ -12,108 +12,175 @@
                   class="mx-1 mx-md-4 d-flex flex-column gap-4"
                   (ngSubmit)="onSubmit()"
                 >
-                  <div class="inputRow d-flex flex-row align-items-center">
-                    <span class="material-symbols-outlined me-2">badge</span>
-                    <div class="form flex-fill position-relative">
-                      <label class="position-relative w-100">
-                        <input
-                          type="text"
-                          id="name"
-                          class="form-control"
-                          placeholder=""
-                          required
-                          name="Name"
-                          formControlName="name"
-                          [class.is-invalid]="errorRequiredName"
-                        />
-                        <span class="top-50 position-absolute">Name</span>
-                      </label>
+                  <div class="parentInput">
+                    <div class="inputRow d-flex flex-row align-items-center">
+                      <span class="material-symbols-outlined me-2">badge</span>
+                      <div class="form flex-fill position-relative">
+                        <label class="position-relative w-100">
+                          <input
+                            type="text"
+                            id="name"
+                            class="form-control"
+                            placeholder=""
+                            required
+                            name="Name"
+                            formControlName="name"
+                            [class.is-invalid]="errorRequiredName"
+                          />
+                          <span class="top-50 position-absolute">Name</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div
+                      *ngIf="name.invalid && (name.touched || name.dirty)"
+                      class="alert p-0 m-0"
+                    >
+                      <div *ngIf="name.hasError('required')" class="">
+                        Name is required
+                      </div>
+                      <div *ngIf="name.hasError('name')">Name is invalid</div>
                     </div>
                   </div>
-                  <div class="inputRow d-flex flex-row align-items-center">
-                    <span class="material-symbols-outlined me-2">person</span>
-                    <div class="form flex-fill position-relative">
-                      <label class="position-relative w-100">
-                        <input
-                          type="text"
-                          id="username"
-                          class="form-control"
-                          placeholder=""
-                          required
-                          name="RegNo"
-                          formControlName="regNo"
-                          [class.is-invalid]="errorRequiredRegNo"
-                        />
-                        <span class="top-50 position-absolute"
-                          >Registration Number</span
+                  <div class="parentInput">
+                    <div class="inputRow d-flex flex-row align-items-center">
+                      <span class="material-symbols-outlined me-2">person</span>
+                      <div class="form flex-fill position-relative">
+                        <label class="position-relative w-100">
+                          <input
+                            type="text"
+                            id="username"
+                            class="form-control"
+                            placeholder=""
+                            required
+                            name="RegNo"
+                            formControlName="regNo"
+                            [class.is-invalid]="errorRequiredRegNo"
+                          />
+                          <span class="top-50 position-absolute"
+                            >Registration Number</span
+                          >
+                        </label>
+                      </div>
+                    </div>
+                    <div
+                      *ngIf="regNo.invalid && (regNo.touched || regNo.dirty)"
+                      class="alert p-0 m-0"
+                    >
+                      <div *ngIf="regNo.hasError('required')" class="">
+                        Regisration Number is required
+                      </div>
+                      <div *ngIf="regNo.hasError('regNo')">
+                        Registration Number is invalid
+                      </div>
+                    </div>
+                  </div>
+                  <div class="parentInput">
+                    <div class="inputRow d-flex flex-row align-items-center">
+                      <span class="material-symbols-outlined me-2">email</span>
+                      <div class="form flex-fill position-relative">
+                        <label class="position-relative w-100">
+                          <input
+                            type="email"
+                            id="email"
+                            class="form-control"
+                            placeholder=""
+                            required
+                            name="email"
+                            formControlName="email"
+                            [class.is-invalid]="errorRequiredEmail"
+                            [class.hasValue]="email.value"
+                          />
+                          <span class="top-50 position-absolute">Email</span>
+                        </label>
+                      </div>
+                    </div>
+                    <div
+                      *ngIf="email.invalid && (email.touched || email.dirty)"
+                      class="alert p-0 m-0"
+                    >
+                      <div *ngIf="email.hasError('required')" class="">
+                        Email is required
+                      </div>
+                      <div *ngIf="email.hasError('email')">
+                        Email is invalid
+                      </div>
+                    </div>
+                  </div>
+                  <div class="parentInput">
+                    <div class="inputRow d-flex flex-row align-items-center">
+                      <span class="material-symbols-outlined me-2">lock</span>
+                      <div class="form flex-fill position-relative">
+                        <label class="position-relative w-100">
+                          <input
+                            type="{{ showPassword ? 'text' : 'password' }}"
+                            id="password"
+                            class="form-control"
+                            placeholder=""
+                            required
+                            formControlName="password"
+                            [class.is-invalid]="errorRequiredPass"
+                          />
+                          <span class="top-50 position-absolute">Password</span>
+                        </label>
+                        <span
+                          class="hideShow material-symbols-outlined me-2 bg-white p-2 rounded-5 position-absolute end-0 top-50"
+                          (click)="togglePasswordVisibility()"
+                          >{{
+                            showPassword ? "visibility_off" : "visibility"
+                          }}</span
                         >
-                      </label>
+                      </div>
                     </div>
-                  </div>
-                  <div class="inputRow d-flex flex-row align-items-center">
-                    <span class="material-symbols-outlined me-2">lock</span>
-                    <div class="form flex-fill position-relative">
-                      <label class="position-relative w-100">
-                        <input
-                          type="{{ showPassword ? 'text' : 'password' }}"
-                          id="password"
-                          class="form-control"
-                          placeholder=""
-                          required
-                          formControlName="password"
-                          [class.is-invalid]="errorRequiredPass"
-                        />
-                        <span class="top-50 position-absolute">Password</span>
-                      </label>
-                      <span
-                        class="hideShow material-symbols-outlined me-2 bg-white p-2 rounded-5 position-absolute end-0 top-50"
-                        (click)="togglePasswordVisibility()"
-                        >{{
-                          showPassword ? "visibility_off" : "visibility"
-                        }}</span
-                      >
-                    </div>
-                  </div>
-                  <div class="inputRow d-flex flex-row align-items-center">
-                    <span class="material-symbols-outlined me-2">key</span>
-                    <div class="form flex-fill position-relative">
-                      <label class="position-relative w-100">
-                        <input
-                          type="password"
-                          id="cnfrmpassword"
-                          class="form-control"
-                          placeholder=""
-                          required
-                          formControlName="cnfrmpassword"
-                          [class.is-invalid]="errorRequiredCnfrmPass"
-                        />
-                        <span class="top-50 position-absolute"
-                          >Confirm Password</span
-                        >
-                      </label>
+                    <div
+                      *ngIf="
+                        password.invalid && (password.touched || password.dirty)
+                      "
+                      class="alert p-0 m-0"
+                    >
+                      <div *ngIf="password.hasError('required')" class="">
+                        Password is required
+                      </div>
+                      <div *ngIf="password.hasError('requirements')">
+                        {{ password.errors.requirements }}
+                      </div>
                     </div>
                   </div>
 
-                  <div class="form-check d-flex flex-row mb-3">
-                    <input
-                      class="form-check-input me-2"
-                      type="checkbox"
-                      id="tandc"
-                      formControlName="tandc"
-                    />
-                    <label class="form-check-label" for="tandc">
-                      I agree to the <a href="#">Terms and Conditions</a>
-                    </label>
+                  <div class="parentInput">
+                    <div class="form-check d-flex flex-row mb-3">
+                      <input
+                        class="form-check-input me-2"
+                        type="checkbox"
+                        id="tandc"
+                        formControlName="tandc"
+                      />
+                      <label class="form-check-label" for="tandc">
+                        I agree to the <a href="#">Terms and Conditions</a>
+                      </label>
+                    </div>
                   </div>
 
                   <div class="d-flex justify-content-center mx-4">
-                    <button class="btn btn-primary" type="submit">
+                    <button
+                      class="btn"
+                      type="submit"
+                      [disabled]="!registrationForm.valid"
+                      [ngClass]="{'btn-primary': registrationForm.valid, 'btn-outline-secondary': !registrationForm.valid}"
+                      >
                       Register
                     </button>
                   </div>
+
+                  <div class="d-flex justify-content-center mx-4">
+                    <span
+                      >Already Registered?
+                      <a routerLink="/login">Login</a></span
+                    >
+                  </div>
                 </form>
               </div>
-              <div class="col p-5 ">
+              <div class="col p-5">
                 <!-- <img src="/src/assets/illustrators/programing.svg" alt="login_illustrator"> -->
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
                   <g id="freepik--background-simple--inject-5">

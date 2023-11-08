@@ -12,16 +12,16 @@ section {
     transform: translate(0, -50%);
 }
 
-.form-control{
+.form-control {
     box-shadow: none;
 }
 
-.hideShow{
+.hideShow {
     cursor: pointer;
     transform: translate(0, -50%);
 }
 
-input{
+input {
     padding-left: 14px;
 }
 
@@ -29,7 +29,8 @@ input{
 /* -----------------Changing Placeholder Postion when input is fixed----------------- */
 .inputRow label .form-control+span {
     color: #6c757d;
-    left: 14px; ;
+    left: 14px;
+    ;
     font-size: 0.9em;
     cursor: text;
     transition: 0.3s ease;
@@ -45,11 +46,34 @@ input{
     font-size: 0.7em;
 }
 
-input{
+.hasValue+span {
+    transform: translate(0%, -140%);
+    font-size: 0.7em !important;
+}
+
+input {
     height: 50px;
     padding-bottom: 0;
 }
 
-input[type="checkbox"]{
+input[type="checkbox"] {
     height: 16px;
+}
+
+
+/* -----------------Showing errors on validation----------------- */
+/* if input has ng-invalid class and ng-touched class then set color to red */
+/* .inputRow label .ng-invalid.ng-touched{
+    color: var(--day-color-error);
+    border-color: var(--day-color-error);
+}
+
+.inputRow label .form-control:focus{
+    color: black !important;
+} */
+
+.alert{
+    color: var(--bs-form-invalid-color);
+    padding-left: 45px !important;
+    font-size: 0.7em;
 }
