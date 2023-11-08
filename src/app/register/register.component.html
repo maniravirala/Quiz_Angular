@@ -132,6 +132,7 @@
                         >
                       </div>
                     </div>
+<<<<<<< HEAD
                     <div
                       *ngIf="
                         password.invalid && (password.touched || password.dirty)
@@ -144,6 +145,70 @@
                       <div *ngIf="password.hasError('requirements')">
                         {{ password.errors.requirements }}
                       </div>
+=======
+                  </div>
+                  <div class="inputRow d-flex flex-row align-items-center">
+                    <span class="material-symbols-outlined me-2">email</span>
+                    <div class="form flex-fill position-relative">
+                      <label class="position-relative w-100">
+                        <input
+                          type="email"
+                          id="email"
+                          class="form-control"
+                          placeholder=""
+                          required
+                          name="email"
+                          formControlName="email"
+                          [class.is-invalid]="errorRequiredEmail"
+                          [(ngModel)]="inputValue"
+                          [class.hasValue]="inputValue"
+                        />
+                        <span class="top-50 position-absolute">Email</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="inputRow d-flex flex-row align-items-center">
+                    <span class="material-symbols-outlined me-2">lock</span>
+                    <div class="form flex-fill position-relative">
+                      <label class="position-relative w-100">
+                        <input
+                          type="{{ showPassword ? 'text' : 'password' }}"
+                          id="password"
+                          class="form-control"
+                          placeholder=""
+                          required
+                          formControlName="password"
+                          [class.is-invalid]="errorRequiredPass"
+                        />
+                        <span class="top-50 position-absolute">Password</span>
+                      </label>
+                      <span
+                        class="hideShow material-symbols-outlined me-2 bg-white p-2 rounded-5 position-absolute end-0 top-50"
+                        (click)="togglePasswordVisibility()"
+                        >{{
+                          showPassword ? "visibility_off" : "visibility"
+                        }}</span
+                      >
+                    </div>
+                  </div>
+                  <div class="inputRow d-flex flex-row align-items-center">
+                    <span class="material-symbols-outlined me-2">key</span>
+                    <div class="form flex-fill position-relative">
+                      <label class="position-relative w-100">
+                        <input
+                          type="password"
+                          id="cnfrmpassword"
+                          class="form-control"
+                          placeholder=""
+                          required
+                          formControlName="cnfrmpassword"
+                          [class.is-invalid]="errorRequiredCnfrmPass"
+                        />
+                        <span class="top-50 position-absolute"
+                          >Confirm Password</span
+                        >
+                      </label>
+>>>>>>> 8f8e30b1723a3749fd54a28ede9bb0d22ed0d741
                     </div>
                   </div>
 
@@ -173,10 +238,14 @@
                   </div>
 
                   <div class="d-flex justify-content-center mx-4">
+<<<<<<< HEAD
                     <span
                       >Already Registered?
                       <a routerLink="/login">Login</a></span
                     >
+=======
+                    <span>Already Registered? <a routerLink="/login">Login</a></span>
+>>>>>>> 8f8e30b1723a3749fd54a28ede9bb0d22ed0d741
                   </div>
                 </form>
               </div>
