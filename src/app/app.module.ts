@@ -24,6 +24,7 @@ import { SharedService } from './shared.service';
 
 import { environment } from '../environments/environment';
 import { FooterComponent } from './footer/footer.component';
+import { HttpClientModule } from '@angular/common/http';
 
 // import { AngularFireModule } from '@angular/fire';
 // import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -49,6 +50,7 @@ import { FooterComponent } from './footer/footer.component';
     FormsModule,
     PasswordModule,
     ReactiveFormsModule,
+    HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),

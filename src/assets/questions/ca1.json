@@ -1,0 +1,38 @@
+{
+    "testName": "SampleTest",
+    "testId": "987654",
+    "allowRetake": true,
+    "questions": [
+      {
+        "text": "What is the capital of France?",
+        "options": ["London", "Paris", "Berlin", "Madrid"],
+        "correctAnswer": 1,
+        "userAnswer": null
+      },
+      {
+        "text": "Who painted the Mona Lisa?",
+        "options": ["Vincent van Gogh", "Leonardo da Vinci", "Pablo Picasso", "Michelangelo"],
+        "correctAnswer": 1,
+        "userAnswer": null
+      },
+      {
+        "text": "What is the powerhouse of the cell?",
+        "options": ["Nucleus", "Chloroplast", "Mitochondria", "Endoplasmic Reticulum"],
+        "correctAnswer": 2,
+        "userAnswer": null
+      },
+      {
+        "text": "Which planet is known as the 'Red Planet'?",
+        "options": ["Venus", "Mars", "Jupiter", "Mercury"],
+        "correctAnswer": 1,
+        "userAnswer": null
+      },
+      {
+        "text": "Who wrote 'Romeo and Juliet'?",
+        "options": ["Charles Dickens", "Jane Austen", "William Shakespeare", "Mark Twain"],
+        "correctAnswer": 2,
+        "userAnswer": null
+      }
+    ]
+  }
+  

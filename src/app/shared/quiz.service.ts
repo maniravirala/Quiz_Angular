@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class QuizService {
+  private quizInfoUrl = './assets/quizInfo.json';
 
-  constructor() { }
+  constructor(private http: HttpClient) {}
+
+  getQuizInfo() {
+    return this.http.get(this.quizInfoUrl);
+  }
 }
