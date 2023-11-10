@@ -1,18 +1,18 @@
-import { Component, OnInit, } from '@angular/core';
-import { QuizService } from '../shared/quiz.service';
+import { Component, OnInit } from '@angular/core';
 import { SharedService } from '../shared.service';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.css'],
 })
-export class QuizComponent implements OnInit{
-  constructor( private service: SharedService  ) { }
+export class QuizComponent implements OnInit {
+  constructor(private service: SharedService, private toast: HotToastService) {}
 
   testInfo = {
     testName: 'CA4PEV114D',
-    testId: '987654',
+    testId: '98667',
     allowRetake: true,
     timeLimit: '0hr 1min 5sec',
     questions: [
@@ -20,31 +20,43 @@ export class QuizComponent implements OnInit{
         text: 'What is the capital of France?',
         options: ['London', 'Paris'],
         correctAnswer: 1,
-        userAnswer: null
+        userAnswer: null,
       },
       {
         text: 'Who painted the Mona Lisa?',
-        options: ['Vincent van Gogh', 'Leonardo da Vinci', 'Pablo Picasso', 'Michelangelo'],
+        options: [
+          'Vincent van Gogh',
+          'Leonardo da Vinci',
+          'Pablo Picasso',
+          'Michelangelo',
+        ],
         correctAnswer: 1,
-        userAnswer: null
+        userAnswer: null,
       },
-    ]
+    ],
   };
 
   testAdding() {
-    this.service.addTest(
-      this.testInfo.testName,
-      this.testInfo.testId,
-      this.testInfo.allowRetake,
-      this.testInfo.timeLimit,
-      this.testInfo.questions
-    ).then((docRef) => {
-      console.log('Document written with ID: ', docRef.id);
-    }).catch((error) => {
-      console.error('Error adding document: ', error);
-    });
+    this.service
+      .addTest(
+        this.testInfo.testName,
+        this.testInfo.testId,
+        this.testInfo.allowRetake,
+        this.testInfo.timeLimit,
+        this.testInfo.questions
+      )
+      .then((testId) => {
+        console.log('Document written with ID: ', testId);
+        // this.testGetting(); 
+      })
+      .catch((error) => {
+        console.error('Error adding document: ', error);
+      });
   }
 
+  testGetting() {
+     return this.service.getTest()
+  }
 
   showResults: boolean = false;
   showModal: boolean = false;
@@ -52,6 +64,28 @@ export class QuizComponent implements OnInit{
   totalMarks: number = this.testInfo.questions.length;
   timer: number = this.parseTimeToSeconds(this.testInfo.timeLimit);
   interval: any;
+  alreadyAdded: boolean = false;
+
+  testName: string = '';
+  testId: string = '';
+  allowRetake: boolean = true;
+  timeLimit: string = '';
+  questions: any = [];
+
+  getQue(){
+    this.testGetting().subscribe((data) => {
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].id == 98667){
+          console.log(data[i]['questions']);
+          this.questions = data[i]['questions'];
+          this.testName = data[i]['testName'];
+          this.testId = data[i].id;
+          this.allowRetake = data[i]['allowRetake'];
+          this.timeLimit = data[i]['timeLimit'];
+        }
+      }
+    });
+  }
 
   selectAnswer(optionIndex: number) {
     this.testInfo.questions[this.currentQuestion].userAnswer = optionIndex;
@@ -74,7 +108,7 @@ export class QuizComponent implements OnInit{
       this.currentQuestion = 0;
       this.timer = this.parseTimeToSeconds(this.testInfo.timeLimit);
       this.showResults = false;
-      this.testInfo.questions.forEach(question => {
+      this.testInfo.questions.forEach((question) => {
         question.userAnswer = null;
       });
     }
@@ -94,7 +128,6 @@ export class QuizComponent implements OnInit{
     const marks = this.calculateMarks();
     return (marks / this.totalMarks) * 100;
   }
-
 
   startTimer() {
     this.interval = setInterval(() => {
@@ -132,18 +165,26 @@ export class QuizComponent implements OnInit{
     const remainingSeconds = seconds % 60;
 
     const hoursDisplay = hours > 0 ? hours + ':' : '';
-    const minutesDisplay = minutes > 0 ? (minutes < 10 ? '0' + minutes + ':' : minutes + ':') : (hours > 0 ? '00:' : '');
-    const secondsDisplay = remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds;
+    const minutesDisplay =
+      minutes > 0
+        ? minutes < 10
+          ? '0' + minutes + ':'
+          : minutes + ':'
+        : hours > 0
+        ? '00:'
+        : '';
+    const secondsDisplay =
+      remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds;
 
     return hoursDisplay + minutesDisplay + secondsDisplay;
   }
-  
+
   ngOnInit() {
     this.startTimer();
+    // this.testAdding();
   }
 
   ngOnDestroy() {
     clearInterval(this.interval);
   }
-
 }
