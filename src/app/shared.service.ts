@@ -14,6 +14,29 @@ import {
 export class SharedService {
   constructor(private fs: Firestore) {}
 
+  getTest() {
+    const tests = collection(this.fs, 'tests');
+    return collectionData(tests, { idField: 'id' });
+  }
+
+  addTest(
+    testName: string,
+    testId: string,
+    allowRetake: boolean,
+    timeLimit: string,
+    questions: any
+  ) {
+    let data = {
+      testName: testName,
+      testId: testId,
+      allowRetake: allowRetake,
+      timeLimit: timeLimit,
+      questions: questions,
+    };
+    let tests = collection(this.fs, 'tests');
+    return addDoc(tests, data);
+  }
+
   getUser() {
     const users = collection(this.fs, 'users');
     return collectionData(users, { idField: 'id' });

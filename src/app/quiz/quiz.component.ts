@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 import { QuizService } from '../shared/quiz.service';
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-quiz',
@@ -7,11 +8,13 @@ import { QuizService } from '../shared/quiz.service';
   styleUrls: ['./quiz.component.css'],
 })
 export class QuizComponent implements OnInit{
+  constructor( private service: SharedService  ) { }
+
   testInfo = {
-    testName: 'SampleTest',
+    testName: 'CA4PEV114D',
     testId: '987654',
-    allowRetake: false,
-    timeLimit: '0hr 0min 20sec',
+    allowRetake: true,
+    timeLimit: '0hr 1min 5sec',
     questions: [
       {
         text: 'What is the capital of France?',
@@ -28,7 +31,23 @@ export class QuizComponent implements OnInit{
     ]
   };
 
+  testAdding() {
+    this.service.addTest(
+      this.testInfo.testName,
+      this.testInfo.testId,
+      this.testInfo.allowRetake,
+      this.testInfo.timeLimit,
+      this.testInfo.questions
+    ).then((docRef) => {
+      console.log('Document written with ID: ', docRef.id);
+    }).catch((error) => {
+      console.error('Error adding document: ', error);
+    });
+  }
+
+
   showResults: boolean = false;
+  showModal: boolean = false;
   currentQuestion: number = 0;
   totalMarks: number = this.testInfo.questions.length;
   timer: number = this.parseTimeToSeconds(this.testInfo.timeLimit);
@@ -49,9 +68,11 @@ export class QuizComponent implements OnInit{
       this.currentQuestion--;
     }
   }
+
   retakeTest() {
     if (this.testInfo.allowRetake) {
       this.currentQuestion = 0;
+      this.timer = this.parseTimeToSeconds(this.testInfo.timeLimit);
       this.showResults = false;
       this.testInfo.questions.forEach(question => {
         question.userAnswer = null;
@@ -75,37 +96,19 @@ export class QuizComponent implements OnInit{
   }
 
 
-  parseTimeToSecond(timeStr: string): number {
-    let hours = 0;
-    let minutes = 10;
-    let seconds = 0;
-    const timeArr = timeStr.split(' ');
-    for (const time of timeArr) {
-      const timeNum = parseInt(time);
-      if (time.includes('hr')) {
-        // seconds += timeNum * 3600;
-        hours = timeNum;
-      } else if (time.includes('min')) {
-        // seconds += timeNum * 60;
-        minutes = timeNum;
-      }
-      else if (time.includes('sec')) {
-        // seconds += timeNum * 60;
-        seconds = timeNum;
-      }
-    }
-    return hours + minutes + seconds;
-  }
-
   startTimer() {
     this.interval = setInterval(() => {
       if (this.timer > 0) {
         this.timer--;
       } else {
         this.showResults = true;
-        clearInterval(this.interval);
+        // this.clearTimer();
       }
     }, 1000);
+  }
+
+  clearTimer() {
+    clearInterval(this.interval);
   }
 
   parseTimeToSeconds(timeStr: string): number {
@@ -128,13 +131,13 @@ export class QuizComponent implements OnInit{
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = seconds % 60;
 
-    const hoursDisplay = hours > 0 ? hours + ' hour' + (hours > 1 ? 's ' : ' ') : '';
-    const minutesDisplay = minutes > 0 ? minutes + ' minute' + (minutes > 1 ? 's ' : ' ') : '';
-    const secondsDisplay = remainingSeconds > 0 ? remainingSeconds + ' second' + (remainingSeconds > 1 ? 's' : '') : '';
+    const hoursDisplay = hours > 0 ? hours + ':' : '';
+    const minutesDisplay = minutes > 0 ? (minutes < 10 ? '0' + minutes + ':' : minutes + ':') : (hours > 0 ? '00:' : '');
+    const secondsDisplay = remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds;
 
     return hoursDisplay + minutesDisplay + secondsDisplay;
   }
-
+  
   ngOnInit() {
     this.startTimer();
   }

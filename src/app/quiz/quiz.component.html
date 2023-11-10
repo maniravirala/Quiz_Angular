@@ -1,107 +1,154 @@
 <section>
-  <div class="container bg-white rounded-4 my-5 position-relative">
+  <div
+    *ngIf="!showResults"
+    class="container bg-white rounded-4 my-5 position-relative"
+  >
     <div class="top pt-3 d-flex align-items-center justify-content-sm-between">
-      <div class="quizName">
-        <span class="text-center fs-5">Quiz Name</span>
+      <div class="quizName col text-start">
+        <span class="text-center fs-5">{{ testInfo.testName }}</span>
       </div>
-      <div class="quizInfo">
-        <span class="text-center">03/10</span>
+      <div class="quizInfo col text-center">
+        <span class="text-center"
+          >{{ currentQuestion + 1 }}/{{ totalMarks }}</span
+        >
       </div>
-      <div class="timer">
-        <span class="fs-3">20:34</span>
+      <div class="timer col text-end">
+        <span class="fs-3">{{ formatTime(timer) }}</span>
       </div>
     </div>
     <div class="progress-bar mt-3">
-      <span class="progress progress-bar"></span>
+      <span
+        class="progress progress-bar"
+        [style.width.%]="((currentQuestion + 1) * 100) / totalMarks"
+      ></span>
+      <span>{{ ((currentQuestion + 1) * 100) / totalMarks }}</span>
     </div>
-    <div class="middle">
+    <div *ngIf="currentQuestion >= 0" class="middle">
       <div class="question mt-4">
-        <span class="text-center h4">Who is the Prime Minister of India</span>
+        <span class="text-center h4"
+          >{{ currentQuestion + 1 }}.
+          {{ testInfo.questions[currentQuestion].text }}</span
+        >
       </div>
-      <div class="answers mx-3 mt-5 ">
-        <div class="a1 row mb-2">
+      <div class="answers mx-3 mt-5">
+        <div
+          *ngFor="
+            let option of testInfo.questions[currentQuestion].options;
+            let i = index
+          "
+          class="row mb-2"
+        >
           <input
             type="radio"
             class="btn-check"
-            name="options"
-            id="option1"
             autocomplete="off"
+            [name]="'option' + i"
+            [value]="i"
+            [id]="'option' + i"
+            [checked]="i === testInfo.questions[currentQuestion].userAnswer"
+            (change)="selectAnswer(i)"
           />
-          <label class="btn btn-secondary py-2" for="option1">Narendra Modi</label>
-        </div>
-        <div class="a2 row mb-2">
-          <input
-            type="radio"
-            class="btn-check"
-            name="options"
-            id="option2"
-            autocomplete="off"
-          />
-          <label class="btn btn-secondary py-2" for="option2">Rahul Gandhi</label>
-        </div>
-        <div class="a3 row mb-2">
-          <input
-            type="radio"
-            class="btn-check"
-            name="options"
-            id="option3"
-            autocomplete="off"
-          />
-          <label class="btn btn-secondary py-2" for="option3">KCR</label>
-        </div>
-        <div class="a4 row mb-2 ">
-          <input
-            type="radio"
-            class="btn-check"
-            name="options"
-            id="option4"
-            autocomplete="off"
-          />
-          <label class="btn btn-secondary py-2" for="option4">Jagan</label>
+          <label class="btn btn-secondary py-2" for="option{{ i }}">{{
+            option
+          }}</label>
         </div>
       </div>
     </div>
     <div class="bottom position-absolute start-0 container">
       <div class="buttons d-flex justify-content-between mx-4">
         <div class="button">
-          <button class="btn btn-primary">Previous</button>
+          <button
+            (click)="prevQuestion()"
+            *ngIf="currentQuestion > 0"
+            class="btn btn-primary"
+          >
+            Previous
+          </button>
+        </div>
+        <div class="button text-end ms-auto">
+          <button
+            (click)="nextQuestion()"
+            *ngIf="currentQuestion < testInfo.questions.length - 1"
+            class="btn btn-success"
+          >
+            Next
+          </button>
         </div>
         <div class="button">
-          <button class="btn btn-success">Next</button>
+          <button
+            *ngIf="currentQuestion === testInfo.questions.length - 1"
+            class="btn btn-danger"
+            data-bs-toggle="modal"
+            data-bs-target="#confirmModal"
+          >
+            Finish
+          </button>
         </div>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="showResults"
+    class="container d-flex justify-content-evenly bg-white rounded-4 my-5 position-relative"
+  >
+    <div class="leftContainer d-flex">
+      <img src="assets/illustrators/result.png" alt="" />
+    </div>
+    <div class="rightContainer d-flex flex-column justify-content-center">
+      <span class="h2 mb-3">Results</span>
+      <span>Test ID: {{ testInfo.testId }}</span>
+      <span>Test Name: {{ testInfo.testName }}</span>
+      <span>Your Score: {{ calculatePercentage() }}%</span>
+      <span>Marks: {{ calculateMarks() }}/{{ totalMarks }}</span>
+      <div class="progress">
+        <div class="progress-bar" [style.width.%]="calculatePercentage()"></div>
+      </div>
+      <div class="buttons d-flex gap-4 mt-4">
+        <button
+          *ngIf="testInfo.allowRetake"
+          (click)="retakeTest()"
+          class="btn btn-primary text-center"
+        >
+          Retake Test
+        </button>
+        <button routerLink="/dashboard" class="btn btn-primary text-center">
+          Quit
+        </button>
       </div>
     </div>
   </div>
 </section>
 
-<div class="container">
-  <h1>Quiz</h1>
-  <p *ngIf="!showResults">Time Remaining: {{ formatTime(timer) }}</p>
-  <div *ngIf="!showResults">
-    <div *ngIf="currentQuestion >= 0">
-      <h3>{{ currentQuestion + 1 }}. {{ testInfo.questions[currentQuestion].text }}</h3>
-      <div *ngFor="let option of testInfo.questions[currentQuestion].options; let i = index">
-        <input
-          type="radio"
-          [name]="'question' + currentQuestion"
-          [value]="i"
-          [checked]="i === testInfo.questions[currentQuestion].userAnswer"
-          (change)="selectAnswer(i)"
-        />
-        {{ option }}
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="confirmModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Are you Confirm </h5>
+        <button
+          type="button"
+          class="close btn"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-      <button (click)="prevQuestion()" *ngIf="currentQuestion > 0">Previous</button>
-      <button (click)="nextQuestion()" *ngIf="currentQuestion < testInfo.questions.length - 1">Next</button>
-      <button (click)="showResults = true" *ngIf="currentQuestion === testInfo.questions.length - 1">Finish</button>
+      <!-- <div class="modal-body">...</div> -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+        <button (click)="showResults = true" type="button" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+      </div>
     </div>
-  </div>
-  <div *ngIf="showResults">
-    <h2>Results</h2>
-    <p>Test ID: {{ testInfo.testId }}</p>
-    <p>Test Name: {{ testInfo.testName }}</p>
-    <p>Your Score:</p>
-    <p>{{ calculatePercentage() }}%</p>
-    <p>Marks {{ calculateMarks() }}/{{ totalMarks }}</p>
-    <button *ngIf="testInfo.allowRetake" (click)="retakeTest()">Retake Test</button>
   </div>
 </div>

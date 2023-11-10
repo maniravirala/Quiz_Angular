@@ -28,5 +28,10 @@
 
 .progress{
     padding: 0;
+    height: 6px !important;
 }
 
+.rightContainer span{
+    overflow-wrap: anywhere;
+    text-wrap: wrap;
+}
