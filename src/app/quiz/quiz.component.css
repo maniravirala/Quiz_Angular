@@ -1,0 +1,31 @@
+.bottom{
+    bottom: 20px;
+}
+
+.btn{
+    text-align: start;
+}
+
+.btn-secondary{
+    color: #252525;
+    background-color: rgb(236, 236, 236) !important;
+    border: none;
+}
+
+.btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active{
+    color: #252525;
+    background-color: #92cce3 !important;
+}
+
+.btn:hover{
+    color: #252525;
+    background-color: rgb(200, 200, 200) !important;
+}
+
+.container:first-child{
+    height: 70vh;
+}
+
+.progress{
+    padding: 0;
+}

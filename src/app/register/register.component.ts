@@ -50,21 +50,22 @@ export class RegisterComponent {
   }
 
   addUsers(
+    uid: string,
     name: string,
     password: string,
     email: string,
     regNo: number,
     tandc: boolean
   ) {
-    this.service.addUser(name, password, email, regNo, tandc).then((res) => {
-      console.log(res);
+    this.service.addUser(uid,name, password, email, regNo, tandc).then((res) => {
+      // console.log(res);
       this.refreshUsers();
     });
   }
 
   deleteUsers(id: string) {
     this.service.deletUser(id).then((res) => {
-      console.log(res);
+      // console.log(res);
       this.refreshUsers();
     });
   }
@@ -89,7 +90,9 @@ export class RegisterComponent {
     if (this.registrationForm.valid) {
       const { name, password, email, regNo, tandc } =
         this.registrationForm.value;
-      this.authService.signup(name,email, password).subscribe(() => {
+      this.authService.signup(name, email, password).subscribe((userCredential) => {
+        // const uid = userCredential.uid;
+        this.addUsers(regNo, name, password, email, regNo, tandc);
         this.router.navigate(['/dashboard']);
       });
 

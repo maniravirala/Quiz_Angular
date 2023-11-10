@@ -5,3 +5,7 @@
 .dropdown-menu li{
     cursor: pointer;
 }
+
+.navbar-brand{
+    font-family: Mochiy Pop One;
+}

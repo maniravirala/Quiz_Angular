@@ -138,7 +138,7 @@
                         Password is required
                       </div>
                       <div *ngIf="password.hasError('requirements')">
-                        {{ password.errors.requirements }}
+                        {{ password.errors['requirements'] }}
                       </div>
                     </div>
                   </div>

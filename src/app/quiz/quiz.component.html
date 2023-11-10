@@ -1,2 +1,75 @@
-<app-navbar></app-navbar>
-<p>quiz works!</p>
+<section>
+  <div class="container bg-white rounded-4 my-5 position-relative">
+    <div class="top pt-3 d-flex align-items-center justify-content-sm-between">
+      <div class="quizName">
+        <span class="text-center fs-5">Quiz Name</span>
+      </div>
+      <div class="quizInfo">
+        <span class="text-center">03/10</span>
+      </div>
+      <div class="timer">
+        <span class="fs-3">20:34</span>
+      </div>
+    </div>
+    <div class="progress-bar mt-3">
+      <span class="progress progress-bar"></span>
+    </div>
+    <div class="middle">
+      <div class="question mt-4">
+        <span class="text-center h4">Who is the Prime Minister of India</span>
+      </div>
+      <div class="answers mx-3 mt-5 ">
+        <div class="a1 row mb-2">
+          <input
+            type="radio"
+            class="btn-check"
+            name="options"
+            id="option1"
+            autocomplete="off"
+          />
+          <label class="btn btn-secondary py-2" for="option1">Narendra Modi</label>
+        </div>
+        <div class="a2 row mb-2">
+          <input
+            type="radio"
+            class="btn-check"
+            name="options"
+            id="option2"
+            autocomplete="off"
+          />
+          <label class="btn btn-secondary py-2" for="option2">Rahul Gandhi</label>
+        </div>
+        <div class="a3 row mb-2">
+          <input
+            type="radio"
+            class="btn-check"
+            name="options"
+            id="option3"
+            autocomplete="off"
+          />
+          <label class="btn btn-secondary py-2" for="option3">KCR</label>
+        </div>
+        <div class="a4 row mb-2 ">
+          <input
+            type="radio"
+            class="btn-check"
+            name="options"
+            id="option4"
+            autocomplete="off"
+          />
+          <label class="btn btn-secondary py-2" for="option4">Jagan</label>
+        </div>
+      </div>
+    </div>
+    <div class="bottom position-absolute start-0 container">
+      <div class="buttons d-flex justify-content-between mx-4">
+        <div class="button">
+          <button class="btn btn-primary">Previous</button>
+        </div>
+        <div class="button">
+          <button class="btn btn-success">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

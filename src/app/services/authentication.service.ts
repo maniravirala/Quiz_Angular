@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, makeEnvironmentProviders } from '@angular/core';
 import {
   Auth,
   authState,
@@ -16,11 +16,13 @@ export class AuthenticationService {
 
   constructor(private auth: Auth) {}
 
-  signup(username: string, email:string, password: string) {
+  signup(username: string, email: string, password: string) {
     return from(
       createUserWithEmailAndPassword(this.auth, email, password)
     ).pipe(
-      switchMap(({ user }) => updateProfile(user, { displayName: username }))
+      switchMap(
+        ({ user }) => updateProfile(user, { displayName: username }),
+      )
     );
   }
 

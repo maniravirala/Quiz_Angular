@@ -23,6 +23,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { SharedService } from './shared.service';
 
 import { environment } from '../environments/environment';
+import { FooterComponent } from './footer/footer.component';
 
 // import { AngularFireModule } from '@angular/fire';
 // import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -38,6 +39,7 @@ import { environment } from '../environments/environment';
     ResultComponent,
     LoginComponent,
     DashboardComponent,
+    FooterComponent,
   ],
   imports: [
     AppRoutingModule,

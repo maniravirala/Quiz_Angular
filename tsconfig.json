@@ -7,7 +7,7 @@
     "forceConsistentCasingInFileNames": true,
     "strict": false,  // set to true
     "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": false,  // set to true
+    "noPropertyAccessFromIndexSignature": true,  // set to true
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
@@ -28,6 +28,6 @@
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": false         // set to true
+    "strictTemplates": true         // set to true
   }
 }
