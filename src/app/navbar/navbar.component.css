@@ -9,3 +9,10 @@
 .navbar-brand{
     font-family: Mochiy Pop One;
 }
+
+.navbar-nav{
+    /* margin-left: 68%; */
+    margin-left: auto;
+    margin-right: 2rem;
+    gap: 1rem;
+}

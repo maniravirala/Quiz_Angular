@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from '../shared.service';
 import { HotToastService } from '@ngneat/hot-toast';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-quiz',
@@ -8,87 +9,93 @@ import { HotToastService } from '@ngneat/hot-toast';
   styleUrls: ['./quiz.component.css'],
 })
 export class QuizComponent implements OnInit {
-  constructor(private service: SharedService, private toast: HotToastService) {}
+  quizData: any;
 
-  testInfo = {
-    testName: 'CA4PEV114D',
-    testId: '98667',
-    allowRetake: true,
-    timeLimit: '0hr 1min 5sec',
-    questions: [
-      {
-        text: 'What is the capital of France?',
-        options: ['London', 'Paris'],
-        correctAnswer: 1,
-        userAnswer: null,
-      },
-      {
-        text: 'Who painted the Mona Lisa?',
-        options: [
-          'Vincent van Gogh',
-          'Leonardo da Vinci',
-          'Pablo Picasso',
-          'Michelangelo',
-        ],
-        correctAnswer: 1,
-        userAnswer: null,
-      },
-    ],
-  };
+  constructor(
+    private service: SharedService,
+    private toast: HotToastService,
+    private route: ActivatedRoute
+  ) {}
 
-  testAdding() {
-    this.service
-      .addTest(
-        this.testInfo.testName,
-        this.testInfo.testId,
-        this.testInfo.allowRetake,
-        this.testInfo.timeLimit,
-        this.testInfo.questions
-      )
-      .then((testId) => {
-        console.log('Document written with ID: ', testId);
-        // this.testGetting(); 
-      })
-      .catch((error) => {
-        console.error('Error adding document: ', error);
-      });
-  }
+  // testInfo = {
+  //   testName: 'CA4PEV114D',
+  //   testId: '98667',
+  //   allowRetake: true,
+  //   timeLimit: '0hr 1min 5sec',
+  //   questions: [
+  //     {
+  //       text: 'What is the capital of France?',
+  //       options: ['London', 'Paris'],
+  //       correctAnswer: 1,
+  //       userAnswer: null,
+  //     },
+  //     {
+  //       text: 'Who painted the Mona Lisa?',
+  //       options: [
+  //         'Vincent van Gogh',
+  //         'Leonardo da Vinci',
+  //         'Pablo Picasso',
+  //         'Michelangelo',
+  //       ],
+  //       correctAnswer: 1,
+  //       userAnswer: null,
+  //     },
+  //   ],
+  // };
 
-  testGetting() {
-     return this.service.getTest()
-  }
+  // testAdding() {
+  //   this.service
+  //     .addTest(
+  //       this.testInfo.testName,
+  //       this.testInfo.testId,
+  //       this.testInfo.allowRetake,
+  //       this.testInfo.timeLimit,
+  //       this.testInfo.questions
+  //     )
+  //     .then((testId) => {
+  //       console.log('Document written with ID: ', testId);
+  //       // this.testGetting();
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error adding document: ', error);
+  //     });
+  // }
+
+  // testGetting() {
+  //   return this.service.getTest();
+  // }
 
   showResults: boolean = false;
   showModal: boolean = false;
   currentQuestion: number = 0;
-  totalMarks: number = this.testInfo.questions.length;
-  timer: number = this.parseTimeToSeconds(this.testInfo.timeLimit);
+  totalMarks: number;
+  timer: number;
   interval: any;
   alreadyAdded: boolean = false;
 
-  testName: string = '';
-  testId: string = '';
-  allowRetake: boolean = true;
-  timeLimit: string = '';
-  questions: any = [];
+  // testName: string = '';
+  // testId: string = '';
+  // allowRetake: boolean = true;
+  // timeLimit: string = '';
+  // questions: any = [];
 
-  getQue(){
-    this.testGetting().subscribe((data) => {
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].id == 98667){
-          console.log(data[i]['questions']);
-          this.questions = data[i]['questions'];
-          this.testName = data[i]['testName'];
-          this.testId = data[i].id;
-          this.allowRetake = data[i]['allowRetake'];
-          this.timeLimit = data[i]['timeLimit'];
-        }
-      }
-    });
-  }
+  // getQue() {
+  //   this.testGetting().subscribe((data) => {
+  //     const testData = data.find((test) => test.id === '98667');
+  //     if (testData) {
+  //       // this.questions = testData['questions'];
+  //       // this.testName = testData['testName'];
+  //       // this.testId = testData['testId'];
+  //       // this.allowRetake = testData['allowRetake'];
+  //       // this.timeLimit = testData['timeLimit'];
+  //       // this.totalMarks = this.questions.length;
+  //       // this.timer = this.parseTimeToSeconds(this.timeLimit);
+  //     }
+  //   });
+  // }
 
   selectAnswer(optionIndex: number) {
-    this.testInfo.questions[this.currentQuestion].userAnswer = optionIndex;
+    this.quizData.questions[this.currentQuestion].userAnswer = optionIndex;
   }
 
   nextQuestion() {
@@ -104,11 +111,11 @@ export class QuizComponent implements OnInit {
   }
 
   retakeTest() {
-    if (this.testInfo.allowRetake) {
+    if (this.quizData.allowRetake) {
       this.currentQuestion = 0;
-      this.timer = this.parseTimeToSeconds(this.testInfo.timeLimit);
+      this.timer = this.parseTimeToSeconds(this.quizData.timeLimit);
       this.showResults = false;
-      this.testInfo.questions.forEach((question) => {
+      this.quizData.questions.forEach((question) => {
         question.userAnswer = null;
       });
     }
@@ -116,7 +123,7 @@ export class QuizComponent implements OnInit {
 
   calculateMarks(): number {
     let marks = 0;
-    for (const question of this.testInfo.questions) {
+    for (const question of this.quizData.questions) {
       if (question.userAnswer === question.correctAnswer) {
         marks++;
       }
@@ -181,8 +188,14 @@ export class QuizComponent implements OnInit {
 
   ngOnInit() {
     this.startTimer();
+    // this.getQue();
     // this.testAdding();
-  }
+    this.route.data.subscribe((data) => {
+      this.quizData = data['quizData'];
+      this.totalMarks = this.quizData.questions.length;
+      this.timer = this.parseTimeToSeconds(this.quizData.timeLimit);
+  });
+}
 
   ngOnDestroy() {
     clearInterval(this.interval);

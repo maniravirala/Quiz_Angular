@@ -27,6 +27,8 @@ import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { provideHotToastConfig } from '@ngneat/hot-toast';
 import { HotToastModule } from '@ngneat/hot-toast';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { QuiCreateComponent } from './qui-create/qui-create.component';
 
 // import { AngularFireModule } from '@angular/fire';
 // import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -43,6 +45,8 @@ import { HotToastModule } from '@ngneat/hot-toast';
     LoginComponent,
     DashboardComponent,
     FooterComponent,
+    PagenotfoundComponent,
+    QuiCreateComponent,
   ],
   imports: [
     AppRoutingModule,

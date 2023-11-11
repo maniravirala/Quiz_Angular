@@ -1,12 +1,11 @@
-<section>
-  <button (click)="getQue()" class="btn btn-success ">Get Questions</button>
+<section *ngIf="quizData"class="" >
   <div
     *ngIf="!showResults"
     class="container bg-white rounded-4 my-5 position-relative"
   >
     <div class="top pt-3 d-flex align-items-center justify-content-sm-between">
       <div class="quizName col text-start">
-        <span class="text-center fs-5">{{ testInfo.testName }}</span>
+        <span class="text-center fs-5">{{ quizData.testName }}</span>
       </div>
       <div class="quizInfo col text-center">
         <span class="text-center"
@@ -28,13 +27,13 @@
       <div class="question mt-4">
         <span class="text-center h4"
           >{{ currentQuestion + 1 }}.
-          {{ testInfo.questions[currentQuestion].text }}</span
+          {{ quizData.questions[currentQuestion].text }}</span
         >
       </div>
       <div class="answers mx-3 mt-5">
         <div
           *ngFor="
-            let option of testInfo.questions[currentQuestion].options;
+            let option of quizData.questions[currentQuestion].options;
             let i = index
           "
           class="row mb-2"
@@ -46,7 +45,7 @@
             [name]="'option' + i"
             [value]="i"
             [id]="'option' + i"
-            [checked]="i === testInfo.questions[currentQuestion].userAnswer"
+            [checked]="i === quizData.questions[currentQuestion].userAnswer"
             (change)="selectAnswer(i)"
           />
           <label class="btn btn-secondary py-2" for="option{{ i }}">{{
@@ -69,7 +68,7 @@
         <div class="button text-end ms-auto">
           <button
             (click)="nextQuestion()"
-            *ngIf="currentQuestion < testInfo.questions.length - 1"
+            *ngIf="currentQuestion < quizData.questions.length - 1"
             class="btn btn-success"
           >
             Next
@@ -77,7 +76,7 @@
         </div>
         <div class="button">
           <button
-            *ngIf="currentQuestion === testInfo.questions.length - 1"
+            *ngIf="currentQuestion === quizData.questions.length - 1"
             class="btn btn-danger"
             data-bs-toggle="modal"
             data-bs-target="#confirmModal"
@@ -95,10 +94,10 @@
     <div class="leftContainer d-flex">
       <img src="assets/illustrators/result.png" alt="" />
     </div>
-    <div class="rightContainer d-flex flex-column justify-content-center">
+    <div class="rightContainer d-flex gap-2 flex-column justify-content-center">
       <span class="h2 mb-3">Results</span>
-      <span>Test ID: {{ testInfo.testId }}</span>
-      <span>Test Name: {{ testInfo.testName }}</span>
+      <span>Test ID: {{ quizData.testId }}</span>
+      <span>Test Name: {{ quizData.testName }}</span>
       <span>Your Score: {{ calculatePercentage() }}%</span>
       <span>Marks: {{ calculateMarks() }}/{{ totalMarks }}</span>
       <div class="progress">
@@ -106,7 +105,7 @@
       </div>
       <div class="buttons d-flex gap-4 mt-4">
         <button
-          *ngIf="testInfo.allowRetake"
+          *ngIf="quizData.allowRetake"
           (click)="retakeTest()"
           class="btn btn-primary text-center"
         >
@@ -133,7 +132,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Are you Confirm </h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Are you Confirm</h5>
         <button
           type="button"
           class="close btn"
@@ -148,8 +147,24 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Cancel
         </button>
-        <button (click)="showResults = true" type="button" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+        <button
+          (click)="showResults = true"
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+        >
+          Submit
+        </button>
       </div>
     </div>
   </div>
 </div>
+
+
+<div *ngIf="!quizData">
+  <p>Loading...</p>
+</div>
+<!-- <div *ngIf="quizData">
+  <p>Quiz data loaded!</p>
+  <p>{{quizData.testName}}</p>
+</div> -->

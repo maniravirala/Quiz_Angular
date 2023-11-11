@@ -3,10 +3,7 @@
   </nav> -->
 
 <!-- Navbar -->
-<nav
-  class="navbar navbar-expand-lg navbar-light"
-  style="background-color: #92e3a9"
->
+<nav class="navbar navbar-expand-lg navbar-light">   <!-- style="background-color: #92e3a9" -->
   <!-- Container wrapper -->
   <div class="container-fluid">
     <!-- Toggle button -->
@@ -29,7 +26,7 @@
         <h3 class="m-0">QUIZ</h3>
       </a>
       <!-- Left links -->
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link" routerLink="/dashboard">Dashboard</a>
         </li>
@@ -38,6 +35,10 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/result">Result</a>
+        </li>
+        <li class="nav-item d-flex align-items-center ">
+          <a class="nav-link" routerLink="/create_quiz">Create</a>
+          <span class="material-symbols-outlined" style="color: #000000A6; margin-left: -8px; cursor:pointer">add_circle</span>
         </li>
       </ul>
       <!-- Left links -->
@@ -100,10 +101,10 @@
           aria-labelledby="navbarDropdownMenuAvatar"
         >
           <li>
-            <a class="dropdown-item" routerLink="dashboard">My profile</a>
+            <a class="dropdown-item" routerLink="/dashboard">My profile</a>
           </li>
           <li>
-            <a class="dropdown-item" routerLink="dashboard">Settings</a>
+            <a class="dropdown-item" routerLink="/dashboard">Settings</a>
           </li>
           <li>
             <ng-container
@@ -114,7 +115,7 @@
           </li>
           <li>
             <ng-template #loginButton>
-              <a class="dropdown-item" routerLink="login">Login</a>
+              <a class="dropdown-item" routerLink="/login">Login</a>
             </ng-template>
           </li>
         </ul>

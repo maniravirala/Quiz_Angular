@@ -1,80 +1,123 @@
+@keyframes wave {
 
-.box{
+    25%,
+    75% {
+        transform: rotate(-20deg);
+    }
+
+    50%,
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.animated-hand {
+    animation: wave 1.5s infinite;
+}
+
+.boxShadow{
+    box-shadow: 0 5px 32px 0 rgba(31, 38, 135, 0.20);
+}
+
+/* .available, .attempted{
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+} */
+
+.box {
     height: 240px;
+    padding: 20px 30px;
     background-color: #022277;
     color: #ffffff;
 }
 
-.boxAbsolute{
+.boxAbsolute {
     bottom: -60px;
+    transform: translate(-18px, 0px);
 }
 
-.boxAbsolute .col{
+.boxAbsolute .col {
     height: 70px;
 }
 
-.boxAbsolute .col img{
+.boxAbsolute .col img {
     width: 40px;
 }
 
-.content h1{
+.content .fs-1 {
     color: #ffffff30;
     font-size: 40px;
     font-family: mitr;
 }
 
-.content p{
+.content p {
     width: 60%;
+    opacity: 0.6;
 }
 
-.contentAvailable{
+.content img {
+    width: 40px;
+    height: 40px;
+}
+
+.contentAvailable {
     height: 84%
+        /* height: 52vh; */
 }
 
-.contentAvailable .row .col-3{
+.contentAvailable .row:hover {
+    background-color: rgb(228, 228, 228);
+    cursor: pointer;
+}
+
+.contentAvailable .row .col-3,
+.contentAvailable .row .col-7 {
     text-overflow: ellipsis;
 }
 
-.contentAvailable::-webkit-scrollbar{
+.contentAvailable::-webkit-scrollbar {
     width: 6px;
 }
 
-.contentAvailable::-webkit-scrollbar-track-piece{
+.contentAvailable::-webkit-scrollbar-track-piece {
     background-color: rgb(228, 228, 228);
     border-radius: 10px;
     width: 19px;
 }
 
 
-.contentAvailable::-webkit-scrollbar-thumb{
+.contentAvailable::-webkit-scrollbar-thumb {
     background-color: rgb(168, 168, 168);
     border-radius: 10px;
     width: 10px;
 }
 
-.fs-12{
+.fs-12 {
     /* font-size: 14px; */
     font-family: mitr;
     /* color: #00000050; */
     color: #858788;
 }
 
-#joinCode{
+#joinCode {
     font-size: 20px;
     font-family: mitr;
 }
 
-#joinBtn{
+#joinBtn {
     right: 10px;
     transform: translate(0, -50%);
 }
 
-.secondRow{
+.name {
+    color: #ffad3a !important;
+}
+
+.secondRow {
     margin-top: 70px !important;
     height: 350px;
 }
 
-.seeMore{
+.seeMore {
     cursor: pointer;
     font-size: 14px;
 }

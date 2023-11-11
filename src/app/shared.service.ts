@@ -6,6 +6,7 @@ import {
   collectionData,
   deleteDoc,
   doc,
+  getDoc,
   setDoc,
 } from '@angular/fire/firestore';
 
@@ -18,6 +19,25 @@ export class SharedService {
   getTest() {
     const tests = collection(this.fs, 'tests');
     return collectionData(tests, { idField: 'id' });
+  }
+
+  async getTestById(id: string) {
+    const tests = collection(this.fs, 'tests');
+    const testDoc = doc(tests, id);
+    
+    try {
+      const doc = await getDoc(testDoc);
+      if (doc.exists()) {
+        const specificTestData = doc.data();
+        return specificTestData;
+      } else {
+        console.log('Document not found');
+        return null;
+      }
+    } catch (error) {
+      console.error('Error getting document:', error);
+      return null;
+    }
   }
 
   async addTest(
