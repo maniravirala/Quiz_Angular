@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container d-none">
   <h2>Create Your Quiz</h2>
 
   <div>
@@ -123,3 +123,164 @@
     </div>
   </div>
 </div>
+
+<section class="d-none ">
+  <form [formGroup]="questionForm">
+    <div class="container bg-white rounded-4 my-5 position-relative">
+      <div
+        class="top pt-3 d-flex align-items-center justify-content-sm-between"
+      >
+        <div class="quizName col text-start">
+          <input type="text" formControlName="testName" class="fs-5" />
+        </div>
+        <div class="quizInfo col text-center">
+          <span> {{ currentQuestion }}/{{ totalMarks }} </span>
+        </div>
+        <div class="timer col text-end">
+          <!-- <input type="time"> -->
+          <input
+            type="text"
+            formControlName="timeLimit"
+            class="fs-3 text-end"
+          />
+        </div>
+      </div>
+      <div class="middle mb-5">
+        <div formArrayName="questions">
+          <div
+            *ngFor="let question of questionControls; let i = index"
+            [formGroupName]="i"
+            class="question-container mt-4"
+          >
+            <div class="form-group d-flex">
+              <div class="question col-6">
+                <!-- <label for="question{{ i }}">Question:</label> -->
+                <textarea
+                  type="text"
+                  class="form-control"
+                  id="question{{ i }}"
+                  formControlName="text"
+                  placeholder="Enter Question..."
+                  rows="5"
+                >
+                </textarea>
+              </div>
+              <!-- <div class="answer mx-3 mt-5">
+                <label for="answer{{ i }}">Answer:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="answer{{ i }}"
+                  formControlName="correctAnswer"
+                />
+              </div> -->
+
+              <div formArrayName="options col-6">
+                <div
+                  *ngFor="let option of getOptionControls(i); let j = index"
+                  class="option"
+                >
+                  <label for="option{{ i }}{{ j }}">Option:</label>
+                  <input
+                    type="text"
+                    id="option{{ i }}{{ j }}"
+                    class="form-control"
+                    [formControlName]="j"
+                  />
+                  <button
+                    class="btn btn-danger"
+                    type="button"
+                    (click)="deleteOption(i, j)"
+                  >
+                    Delete
+                  </button>
+                </div>
+                <button
+                  class="btn btn-success"
+                  type="button"
+                  (click)="addOption(i)"
+                >
+                  Add Option
+                </button>
+              </div>
+            </div>
+            <button
+              class="btn btn-warning"
+              type="button"
+              (click)="deleteQuestion(i)"
+            >
+              Delete Question
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="bottomBelow position-absolute start-0 container">
+        <div class="buttons d-flex justify-content-between mx-4">
+          <div class="button">
+            <button
+              class="btn btn-primary"
+              type="button"
+              (click)="addQuestion()"
+            >
+              Add Question
+            </button>
+          </div>
+          <div class="button text-end ms-auto">
+            <button class="btn btn-success" type="button" (click)="save()">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
+
+<section>
+  <form [formGroup]="questionForm" class="h-100">
+    <div class="container h-80 bg-white rounded-4 my-5 position-relative">
+      <div class="top pt-3 d-flex align-items-center justify-content-between">
+        <div class="quizName col-sm-4 text-start">
+          <input type="text" formControlName="testName" class="fs-5 w-100" />
+        </div>
+        <div class="quizInfo col-sm-4 text-center">
+          <span>{{ currentQuestion }}/{{ totalMarks }}</span>
+        </div>
+        <div class="timer col-sm-4 text-end">
+          <input type="text" formControlName="timeLimit" class="fs-3 text-end w-100" />
+        </div>
+      </div>
+      <div class="middle mb-5">
+        <div formArrayName="questions">
+          <div *ngFor="let question of questionControls; let i = index" [formGroupName]="i" class="question-container mt-4">
+            <div class="form-group d-flex">
+              <div class="question col-lg-6">
+                <textarea type="text" class="form-control w-100" formControlName="text" placeholder="Enter Question..." rows="5"></textarea>
+              </div>
+              <div formArrayName="options" class="col-lg-6">
+                <div *ngFor="let option of getOptionControls(i); let j = index" class="option">
+                  <label for="option{{ i }}{{ j }}">Option:</label>
+                  <input type="text" id="option{{ i }}{{ j }}" class="form-control w-100" [formControlName]="j" />
+                  <button class="btn btn-danger" type="button" (click)="deleteOption(i, j)">Delete</button>
+                </div>
+                <button class="btn btn-success" type="button" (click)="addOption(i)">Add Option</button>
+              </div>
+            </div>
+            <button class="btn btn-warning" type="button" (click)="deleteQuestion(i)">Delete Question</button>
+          </div>
+        </div>
+      </div>
+      <div class="bottomBelow position-absolute start-0 container-fluid">
+        <div class="buttons d-flex justify-content-between mx-4">
+          <div class="button">
+            <button class="btn btn-primary" type="button" (click)="addQuestion()">Add Question</button>
+          </div>
+          <div class="button text-end ms-auto">
+            <button class="btn btn-success" type="button" (click)="save()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
+

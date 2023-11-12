@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 
 @Component({
@@ -6,16 +6,20 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
   templateUrl: './qui-create.component.html',
   styleUrls: ['./qui-create.component.css'],
 })
-export class QuiCreateComponent {
+export class QuiCreateComponent implements OnInit{
   questionForm: FormGroup;
+  currentQuestion: number = 0;
+  totalMarks: number = 0;
 
   constructor(private fb: FormBuilder) {
     this.questionForm = this.fb.group({
-      testName: [''],
+      testName: ['untitled'],
       testId: [''],
-      timeLimit: [''],
+      timeLimit: ['1hr 0min 0sec'],
       allowRetake: [false],
-      questions: this.fb.array([]),
+      questions: this.fb.array([
+        this.createOptionFormGroup
+      ]),
     });
   }
 
@@ -73,5 +77,9 @@ export class QuiCreateComponent {
   save() {
     console.log(this.questionForm.value);
     // Implement logic to handle form data submission
+  }
+
+  ngOnInit(): void {
+    // this.addQuestion();
   }
 }

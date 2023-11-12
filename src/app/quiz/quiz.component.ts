@@ -72,6 +72,7 @@ export class QuizComponent implements OnInit {
   timer: number;
   interval: any;
   alreadyAdded: boolean = false;
+  quizId: string | null = null;
 
   // testName: string = '';
   // testId: string = '';
@@ -187,15 +188,23 @@ export class QuizComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.startTimer();
-    // this.getQue();
-    // this.testAdding();
-    this.route.data.subscribe((data) => {
-      this.quizData = data['quizData'];
-      this.totalMarks = this.quizData.questions.length;
-      this.timer = this.parseTimeToSeconds(this.quizData.timeLimit);
-  });
-}
+    this.route.params.subscribe((params) => {
+      // console.log(params);
+      this.quizId = params['id']; 
+      if (this.quizId) {
+        this.startTimer();
+        // this.getQue();
+        // this.testAdding();
+        this.route.data.subscribe((data) => {
+          this.quizData = data['quizData'];
+          this.totalMarks = this.quizData.questions.length;
+          this.timer = this.parseTimeToSeconds(this.quizData.timeLimit);
+        });
+      } else {
+        console.log('No quiz id found');
+      }
+    });
+  }
 
   ngOnDestroy() {
     clearInterval(this.interval);
