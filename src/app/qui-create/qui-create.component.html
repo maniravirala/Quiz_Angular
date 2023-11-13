@@ -8,7 +8,7 @@
           <input type="text" formControlName="testName" class="fs-5" />
         </div>
         <div class="quizInfo col text-center">
-          <span> {{ currentQuestionIndex+1 }}/{{ totalQuestions+1 }} </span>
+          <span> {{ currentQuestionIndex + 1 }}/{{ totalQuestions + 1 }} </span>
         </div>
         <div class="timer col text-end">
           <!-- <input type="time"> -->
@@ -19,7 +19,7 @@
           />
         </div>
       </div>
-      <div class="secondTop d-flex justify-content-between ">
+      <div class="secondTop d-flex justify-content-between">
         <div class="quizId">
           <label for="testId" class="me-3">Test ID:</label>
           <input type="text" formControlName="testId" id="testId" class="" />
@@ -27,9 +27,9 @@
         <div class="toggle">
           <label for="retake" class="me-3">Retake:</label>
           <label class="switch">
-            <input type="checkbox" formControlName="allowRetake" id="retake">
+            <input type="checkbox" formControlName="allowRetake" id="retake" />
             <span class="slider"></span>
-        </label>
+          </label>
         </div>
       </div>
       <div class="middle mb-5">
@@ -38,10 +38,10 @@
             *ngFor="let question of questionControls; let i = index"
             [formGroupName]="i"
             class="question-container mt-4"
-            [class.d-none] = "i!==currentQuestionIndex"
+            [class.d-none]="i !== currentQuestionIndex"
           >
             <div class="form-group d-flex flex-column gap-3">
-              <div class="question">
+              <div class="question d-flex ">
                 <!-- <label for="question{{ i }}">Question:</label> -->
                 <textarea
                   type="text"
@@ -52,18 +52,24 @@
                   rows="5"
                 >
                 </textarea>
+                <div class="answer mx-3 mt-5">
+                  <label for="answer{{ i }}">Answer:</label>
+                  <!-- dropdown --> 
+                  <select
+                    class="form-select"
+                    id="answer{{ i }}"
+                    formControlName="correctAnswer"
+                  >
+                    <option *ngFor="let option of getOptionControls(i); let j = index" [value]="j">{{ j+1 }}</option>
+                  </select>
+                </div>
               </div>
-              <!-- <div class="answer mx-3 mt-5">
-                <label for="answer{{ i }}">Answer:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="answer{{ i }}"
-                  formControlName="correctAnswer"
-                />
-              </div> -->
+              
 
-              <div formArrayName="options" class="d-flex flex-column gap-3">
+              <div
+                formArrayName="options"
+                class="optionsContainer d-flex flex-column gap-3"
+              >
                 <div
                   *ngFor="let option of getOptionControls(i); let j = index"
                   class="option flex-grow-1 d-flex align-items-center gap-3"
@@ -116,26 +122,28 @@
             </button>
           </div>
 
-          <div class="button w-25 d-flex justify-content-between ">
+          <div class="button w-25 d-flex justify-content-between">
             <button
               class="btn btn-primary"
               type="button"
               (click)="previousQuestion()"
-              [disabled]="currentQuestionIndex === 0 || currentQuestionIndex < 0"
+              [disabled]="
+                currentQuestionIndex === 0 || currentQuestionIndex < 0
+              "
             >
               Previous
             </button>
             <button
-            class="btn btn-primary"
-            type="button"
-            (click)="nextQuestion()"
-            [disabled]="currentQuestionIndex === questionControls.length - 1"
+              class="btn btn-primary"
+              type="button"
+              (click)="nextQuestion()"
+              [disabled]="currentQuestionIndex === questionControls.length - 1"
             >
               Next
             </button>
           </div>
 
-          <div class="button ">
+          <div class="button">
             <button class="btn btn-success" type="button" (click)="save()">
               Save
             </button>

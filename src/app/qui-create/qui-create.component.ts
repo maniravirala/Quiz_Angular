@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-qui-create',
@@ -12,17 +13,15 @@ export class QuiCreateComponent {
   totalMarks: number = 0;
   currentQuestionIndex: number = 0;
   totalQuestions: number = 0;
+  correctAnswer: string;
 
-
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private service: SharedService) {
     this.questionForm = this.fb.group({
       testName: ['untitled'],
       testId: [''],
       timeLimit: ['1hr 0min 0sec'],
       allowRetake: [false],
-      questions: this.fb.array([
-        this.createQuestionFormGroup(), 
-      ]),
+      questions: this.fb.array([this.createQuestionFormGroup()]),
     });
   }
 
@@ -35,7 +34,7 @@ export class QuiCreateComponent {
       this.currentQuestionIndex++;
     }
   }
-  
+
   previousQuestion() {
     if (this.currentQuestionIndex >= 0) {
       this.currentQuestionIndex--;
@@ -99,7 +98,22 @@ export class QuiCreateComponent {
   }
 
   save() {
-    console.log(this.questionForm.value);
-    // Implement logic to handle form data submission
+    // console.log(this.questionForm.value);
+
+    this.service
+      .addTest(
+        this.questionForm.value.testName,
+        this.questionForm.value.testId,
+        this.questionForm.value.allowRetake,
+        this.questionForm.value.timeLimit,
+        this.questionForm.value.questions
+      )
+      .then((testId) => {
+        console.log('Document written with ID: ', testId);
+        // this.testGetting();
+      })
+      .catch((error) => {
+        console.error('Error adding document: ', error);
+      });
   }
 }

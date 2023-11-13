@@ -1,21 +1,62 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from '../shared.service';
-import { HotToastService } from '@ngneat/hot-toast';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.css'],
 })
-export class QuizComponent implements OnInit {
-  quizData: any;
-
+export class QuizComponent implements OnInit{
   constructor(
     private service: SharedService,
-    private toast: HotToastService,
-    private route: ActivatedRoute
-  ) {}
+  ) { }
+
+  quizzes: any[] 
+  filteredQuizzes: any[]  // = this.quizzes; // Initially, show all quizzes
+  searchQuery: string = '';
+
+
+  testGetting() {
+    this.service.getTest().subscribe((data) => {
+      console.log(data);
+      this.filteredQuizzes = data;
+      this.quizzes = data;
+    });
+    }
+    
+  
+
+  // quizzes = [
+  //   { id: 1, title: 'Quiz 1', category: 'Science', difficulty: 'Easy' },
+  //   { id: 2, title: 'Quiz 2', category: 'History', difficulty: 'Medium' },
+  //   { id: 3, title: 'Quiz 3', category: 'Math', difficulty: 'Hard' },
+  //   { id: 4, title: 'Quiz 4', category: 'Geography', difficulty: 'Medium' },
+  //   { id: 5, title: 'Quiz 5', category: 'Literature', difficulty: 'Easy' },
+  //   { id: 6, title: 'Quiz 6', category: 'Art', difficulty: 'Hard' },
+  //   { id: 7, title: 'Quiz 7', category: 'Sports', difficulty: 'Medium' },
+  //   { id: 8, title: 'Quiz 8', category: 'Music', difficulty: 'Easy' },
+  //   { id: 9, title: 'Quiz 9', category: 'Technology', difficulty: 'Hard' },
+  //   { id: 10, title: 'Quiz 10', category: 'Movies', difficulty: 'Medium' },
+  // ];
+
+
+  filterQuizzes() {
+    const searchWords = this.searchQuery
+      .toLowerCase()
+      .split(' ')
+      .filter((word) => word.trim() !== '');
+
+    this.filteredQuizzes = this.quizzes.filter((quiz) => {
+      const quizTitle = quiz.testName.toLowerCase().replace(/\s/g, '');
+      return searchWords.every((word) => quizTitle.includes(word));
+    });
+
+    console.log(this.filteredQuizzes);
+  }
+
+  ngOnInit(): void {
+    this.testGetting()
+  }
 
   // testInfo = {
   //   testName: 'CA4PEV114D',
@@ -65,15 +106,6 @@ export class QuizComponent implements OnInit {
   //   return this.service.getTest();
   // }
 
-  showResults: boolean = false;
-  showModal: boolean = false;
-  currentQuestion: number = 0;
-  totalMarks: number;
-  timer: number;
-  interval: any;
-  alreadyAdded: boolean = false;
-  quizId: string | null = null;
-
   // testName: string = '';
   // testId: string = '';
   // allowRetake: boolean = true;
@@ -94,119 +126,4 @@ export class QuizComponent implements OnInit {
   //     }
   //   });
   // }
-
-  selectAnswer(optionIndex: number) {
-    this.quizData.questions[this.currentQuestion].userAnswer = optionIndex;
-  }
-
-  nextQuestion() {
-    if (this.currentQuestion < this.totalMarks - 1) {
-      this.currentQuestion++;
-    }
-  }
-
-  prevQuestion() {
-    if (this.currentQuestion > 0) {
-      this.currentQuestion--;
-    }
-  }
-
-  retakeTest() {
-    if (this.quizData.allowRetake) {
-      this.currentQuestion = 0;
-      this.timer = this.parseTimeToSeconds(this.quizData.timeLimit);
-      this.showResults = false;
-      this.quizData.questions.forEach((question) => {
-        question.userAnswer = null;
-      });
-    }
-  }
-
-  calculateMarks(): number {
-    let marks = 0;
-    for (const question of this.quizData.questions) {
-      if (question.userAnswer === question.correctAnswer) {
-        marks++;
-      }
-    }
-    return marks;
-  }
-
-  calculatePercentage(): number {
-    const marks = this.calculateMarks();
-    return (marks / this.totalMarks) * 100;
-  }
-
-  startTimer() {
-    this.interval = setInterval(() => {
-      if (this.timer > 0) {
-        this.timer--;
-      } else {
-        this.showResults = true;
-        // this.clearTimer();
-      }
-    }, 1000);
-  }
-
-  clearTimer() {
-    clearInterval(this.interval);
-  }
-
-  parseTimeToSeconds(timeStr: string): number {
-    let seconds = 0;
-    const timeArr = timeStr.split(' ');
-    timeArr.forEach((time) => {
-      if (time.includes('hr')) {
-        seconds += parseInt(time) * 3600;
-      } else if (time.includes('min')) {
-        seconds += parseInt(time) * 60;
-      } else if (time.includes('sec')) {
-        seconds += parseInt(time);
-      }
-    });
-    return seconds;
-  }
-
-  formatTime(seconds: number): string {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const remainingSeconds = seconds % 60;
-
-    const hoursDisplay = hours > 0 ? hours + ':' : '';
-    const minutesDisplay =
-      minutes > 0
-        ? minutes < 10
-          ? '0' + minutes + ':'
-          : minutes + ':'
-        : hours > 0
-        ? '00:'
-        : '';
-    const secondsDisplay =
-      remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds;
-
-    return hoursDisplay + minutesDisplay + secondsDisplay;
-  }
-
-  ngOnInit() {
-    this.route.params.subscribe((params) => {
-      // console.log(params);
-      this.quizId = params['id']; 
-      if (this.quizId) {
-        this.startTimer();
-        // this.getQue();
-        // this.testAdding();
-        this.route.data.subscribe((data) => {
-          this.quizData = data['quizData'];
-          this.totalMarks = this.quizData.questions.length;
-          this.timer = this.parseTimeToSeconds(this.quizData.timeLimit);
-        });
-      } else {
-        console.log('No quiz id found');
-      }
-    });
-  }
-
-  ngOnDestroy() {
-    clearInterval(this.interval);
-  }
 }

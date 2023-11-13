@@ -29,6 +29,7 @@ import { provideHotToastConfig } from '@ngneat/hot-toast';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { QuiCreateComponent } from './qui-create/qui-create.component';
+import { QuizIdComponent } from './quiz-id/quiz-id.component';
 
 // import { AngularFireModule } from '@angular/fire';
 // import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -47,6 +48,7 @@ import { QuiCreateComponent } from './qui-create/qui-create.component';
     FooterComponent,
     PagenotfoundComponent,
     QuiCreateComponent,
+    QuizIdComponent,
   ],
   imports: [
     AppRoutingModule,

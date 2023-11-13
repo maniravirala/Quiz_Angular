@@ -11,6 +11,7 @@ import { canActivate, redirectLoggedInTo, redirectUnauthorizedTo } from "@angula
 import { QuizDataResolver } from './resolver/quiz-data.resolver';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { QuiCreateComponent } from './qui-create/qui-create.component';
+import { QuizIdComponent } from './quiz-id/quiz-id.component';
 
 const redirectToLogin = () => redirectUnauthorizedTo(['/login']);
 const redirectTodashboard = () => redirectLoggedInTo(['/dashboard']);
@@ -23,7 +24,7 @@ const routes: Routes = [
   { path: 'result', component: ResultComponent, ...canActivate(redirectToLogin) },
   { path: 'create_quiz', component: QuiCreateComponent, ...canActivate(redirectToLogin)},
   { path: '', redirectTo: '/register', pathMatch: 'full' },
-  { path: 'quiz/:id', component: QuizComponent, resolve:{quizData: QuizDataResolver}},
+  { path: 'quiz/:id', component: QuizIdComponent, resolve:{quizData: QuizDataResolver}},
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent},
 ];
 
