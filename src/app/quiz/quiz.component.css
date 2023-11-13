@@ -35,3 +35,7 @@
     overflow-wrap: anywhere;
     text-wrap: wrap;
 }
+
+.question span{
+    overflow-wrap: break-word;
+}

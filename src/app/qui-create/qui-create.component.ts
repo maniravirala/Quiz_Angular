@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 
 @Component({
@@ -6,10 +6,13 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
   templateUrl: './qui-create.component.html',
   styleUrls: ['./qui-create.component.css'],
 })
-export class QuiCreateComponent implements OnInit{
+export class QuiCreateComponent {
   questionForm: FormGroup;
   currentQuestion: number = 0;
   totalMarks: number = 0;
+  currentQuestionIndex: number = 0;
+  totalQuestions: number = 0;
+
 
   constructor(private fb: FormBuilder) {
     this.questionForm = this.fb.group({
@@ -18,7 +21,7 @@ export class QuiCreateComponent implements OnInit{
       timeLimit: ['1hr 0min 0sec'],
       allowRetake: [false],
       questions: this.fb.array([
-        this.createOptionFormGroup
+        this.createQuestionFormGroup(), 
       ]),
     });
   }
@@ -27,11 +30,25 @@ export class QuiCreateComponent implements OnInit{
     return (this.questionForm.get('questions') as FormArray).controls;
   }
 
+  nextQuestion() {
+    if (this.currentQuestionIndex < this.questionControls.length - 1) {
+      this.currentQuestionIndex++;
+    }
+  }
+  
+  previousQuestion() {
+    if (this.currentQuestionIndex >= 0) {
+      this.currentQuestionIndex--;
+    }
+  }
+
   createQuestionFormGroup() {
     return this.fb.group({
       text: [''],
       options: this.fb.array([
         this.createOptionFormGroup(), // Initial two options
+        this.createOptionFormGroup(),
+        this.createOptionFormGroup(),
         this.createOptionFormGroup(),
       ]),
       correctAnswer: [null],
@@ -46,10 +63,17 @@ export class QuiCreateComponent implements OnInit{
   addQuestion() {
     const newQuestion = this.createQuestionFormGroup();
     (this.questionForm.get('questions') as FormArray).push(newQuestion);
+    this.nextQuestion();
+    this.totalQuestions++;
   }
 
   deleteQuestion(index: number) {
     (this.questionForm.get('questions') as FormArray).removeAt(index);
+    // this.previousQuestion();
+    if (this.currentQuestionIndex >= this.totalQuestions) {
+      this.previousQuestion();
+    }
+    this.totalQuestions--;
   }
 
   addOption(questionIndex: number) {
@@ -77,9 +101,5 @@ export class QuiCreateComponent implements OnInit{
   save() {
     console.log(this.questionForm.value);
     // Implement logic to handle form data submission
-  }
-
-  ngOnInit(): void {
-    // this.addQuestion();
   }
 }
