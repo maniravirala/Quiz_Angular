@@ -1,12 +1,18 @@
-<div class="container">
+<app-navbar></app-navbar>
+<div class="container mt-3">
   <input type="text" [(ngModel)]="searchQuery" (input)="filterQuizzes()" placeholder="Search Quizzes" class="form-control mb-3">
 
   <div class="row">
-    <div *ngFor="let quiz of filteredQuizzes" class="col-md-4 mb-4">
-      <div class="card">
+    <div class="col-md-4 mb-4" *ngFor="let quiz of filteredQuizzes">
+      <div class="card shadow">
         <div class="card-body">
           <h5 class="card-title">{{ quiz.testName }}</h5>
-          <!-- Add more details or buttons for the quiz -->
+          <div class="card-text">
+            <p><strong>ID:</strong> {{ quiz.testId }}</p>
+            <p><strong>Time:</strong> {{ quiz.timeLimit }}</p>
+            <p><strong>Total Questions:</strong> {{ quiz.questions.length }}</p>
+            <a [routerLink]="['/quiz', quiz.id]" class="btn btn-primary mt-3">Start Quiz <i class="fas fa-arrow-right"></i></a>
+          </div>
         </div>
       </div>
     </div>

@@ -49,6 +49,7 @@ export class SharedService {
   ) {
     let data = {
       testName: testName,
+      testId: testId,
       allowRetake: allowRetake,
       timeLimit: timeLimit,
       questions: questions,

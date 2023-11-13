@@ -56,7 +56,10 @@ export class QuizIdComponent implements OnInit{
   calculateMarks(): number {
     let marks = 0;
     for (const question of this.quizData.questions) {
-      if (question.userAnswer === question.correctAnswer) {
+      const userAnswerIndex = question.userAnswer;
+      const userSelectedOption = question.options[userAnswerIndex];
+
+      if (userSelectedOption && userSelectedOption.isCorrect ){
         marks++;
       }
     }

@@ -52,9 +52,8 @@
                   rows="5"
                 >
                 </textarea>
-                <div class="answer mx-3 mt-5">
+                <!-- <div class="answer mx-3 mt-5">
                   <label for="answer{{ i }}">Answer:</label>
-                  <!-- dropdown --> 
                   <select
                     class="form-select"
                     id="answer{{ i }}"
@@ -62,7 +61,7 @@
                   >
                     <option *ngFor="let option of getOptionControls(i); let j = index" [value]="j">{{ j+1 }}</option>
                   </select>
-                </div>
+                </div> -->
               </div>
               
 
@@ -73,14 +72,28 @@
                 <div
                   *ngFor="let option of getOptionControls(i); let j = index"
                   class="option flex-grow-1 d-flex align-items-center gap-3"
+                  [formGroupName]="j"
                 >
                   <label for="option{{ i }}{{ j }}">Option:</label>
                   <input
                     type="text"
                     id="option{{ i }}{{ j }}"
                     class="form-control"
-                    [formControlName]="j"
+                    formControlName="optionText"
                   />
+                  <div class=" form-check form-check-inline align-items-center">
+                    <input
+                      type="checkbox"
+                      [id]="'correctOption' + i + j"
+                      [name]="'correctOption' + i"
+                      [value]="j"
+                      class="form-check-input"
+                      formControlName='isCorrect' 
+                    />
+                    <label [for]="'correctOption' + i + j" class="form-check-label"
+                      >Answer</label
+                    >
+                  </div>
                   <button
                     class="btn btn-danger"
                     type="button"
@@ -153,3 +166,21 @@
     </div>
   </form>
 </section>
+
+<!-- Modal -->
+<div *ngIf="showSuccess" class="modal-background">
+  <div class="modal-content">
+    <h2>Success!</h2>
+    <p>Your action was successful.</p>
+    <button (click)="closeSuccessModal()" routerLink="/dashboard" class="btn btn-success ">Close</button>
+  </div>
+</div>
+
+
+<div *ngIf="showWarning" class="modal-background">
+  <div class="modal-content">
+    <h2>Warning!</h2>
+    <p>Give unique Test Id</p>
+    <button (click)="closeWarningModal()" class="btn btn-warning">Close</button>
+  </div>
+</div>

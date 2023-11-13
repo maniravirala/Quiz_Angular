@@ -14,6 +14,8 @@ export class QuiCreateComponent {
   currentQuestionIndex: number = 0;
   totalQuestions: number = 0;
   correctAnswer: string;
+  showSuccess: boolean = false;
+  showWarning: boolean = false;
 
   constructor(private fb: FormBuilder, private service: SharedService) {
     this.questionForm = this.fb.group({
@@ -50,13 +52,15 @@ export class QuiCreateComponent {
         this.createOptionFormGroup(),
         this.createOptionFormGroup(),
       ]),
-      correctAnswer: [null],
       userAnswer: [null],
     });
   }
 
   createOptionFormGroup() {
-    return this.fb.control(''); // Create a Form Control instead of a FormGroup
+    return this.fb.group({
+      optionText: [''], // Add a field to hold the option text
+      isCorrect: [false], // Boolean to denote if this option is the correct answer
+    });
   }
 
   addQuestion() {
@@ -95,12 +99,24 @@ export class QuiCreateComponent {
       .at(questionIndex)
       .get('options') as FormArray;
     return question.controls;
+    // return ((this.questionForm.get('questions') as FormArray).controls)
+  }
+
+  closeSuccessModal() {
+    this.showSuccess = false;
+  }
+
+  closeWarningModal() {
+    this.showWarning = false;
   }
 
   save() {
     // console.log(this.questionForm.value);
 
-    this.service
+    if (this.questionForm.value.testId == '') {
+      this.showWarning = true;
+    } else {
+      this.service
       .addTest(
         this.questionForm.value.testName,
         this.questionForm.value.testId,
@@ -109,11 +125,14 @@ export class QuiCreateComponent {
         this.questionForm.value.questions
       )
       .then((testId) => {
+        this.showSuccess = true;
         console.log('Document written with ID: ', testId);
+        // this.questionForm.reset();
         // this.testGetting();
       })
       .catch((error) => {
         console.error('Error adding document: ', error);
       });
+    }
   }
 }

@@ -1,41 +1,106 @@
-.bottom{
+.bottom {
     bottom: 20px;
 }
 
-.btn{
+.btn {
     text-align: start;
 }
 
-.answers .btn-secondary{
+.answers .btn-secondary {
     color: #252525;
     background-color: rgb(236, 236, 236) !important;
     border: none;
 }
 
-.answers  .btn-check:checked+.btn,.answers .btn.active,.answers .btn.show, .btn:first-child:active,.answers :not(.btn-check)+.btn:active{
+.answers .btn-check:checked+.btn,
+.answers .btn.active,
+.answers .btn.show,
+.btn:first-child:active,
+.answers :not(.btn-check)+.btn:active {
     color: #252525;
     background-color: #92cce3 !important;
 }
 
-.answers .btn:hover{
+.answers .btn:hover {
     color: #252525;
     background-color: rgb(200, 200, 200) !important;
 }
 
-.container:first-child{
+.container:first-child {
     height: 70vh;
 }
 
-.progress{
+.progress {
     padding: 0;
     height: 6px !important;
 }
 
-.rightContainer span{
+.rightContainer span {
     overflow-wrap: anywhere;
     text-wrap: wrap;
 }
 
-.question span{
+.question span {
     overflow-wrap: break-word;
 }
+/* 
+.card {
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-text {
+    color: #666;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+ */
+
+
+
+ .card {
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 8px;
+  }
+  
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: #1a0dab; /* Google's blue */
+  }
+  
+  .card-text {
+    color: #70757a; /* Google's grey for text */
+  }
+  
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .btn i {
+    margin-left: 6px;
+  }
+  

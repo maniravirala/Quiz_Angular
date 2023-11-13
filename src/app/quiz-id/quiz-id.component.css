@@ -1,0 +1,41 @@
+.bottom{
+    bottom: 20px;
+}
+
+.btn{
+    text-align: start;
+}
+
+.answers .btn-secondary{
+    color: #252525;
+    background-color: rgb(236, 236, 236) !important;
+    border: none;
+}
+
+.answers  .btn-check:checked+.btn,.answers .btn.active,.answers .btn.show, .btn:first-child:active,.answers :not(.btn-check)+.btn:active{
+    color: #252525;
+    background-color: #92cce3 !important;
+}
+
+.answers .btn:hover{
+    color: #252525;
+    background-color: rgb(200, 200, 200) !important;
+}
+
+.container:first-child{
+    height: 70vh;
+}
+
+.progress{
+    padding: 0;
+    height: 6px !important;
+}
+
+.rightContainer span{
+    overflow-wrap: anywhere;
+    text-wrap: wrap;
+}
+
+.question span{
+    overflow-wrap: break-word;
+}
